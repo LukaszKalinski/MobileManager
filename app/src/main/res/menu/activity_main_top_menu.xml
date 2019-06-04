@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ActivityMain">
+
+    <item
+        android:id="@+id/msg" android:icon="@drawable/msg" app:showAsAction="always"   android:title="Messages"/>
+    <item
+        android:id="@+id/team" android:icon="@drawable/team" app:showAsAction="always" android:title="Team"/>
+    <item
+        android:id="@+id/calendar" android:icon="@drawable/calendar" app:showAsAction="always" android:title="Calendar"/>
+    <item
+        android:id="@+id/stadium" android:icon="@drawable/stadium" app:showAsAction="always" android:title="Stadium"/>
+    <item
+        android:id="@+id/finance" android:icon="@drawable/finance" app:showAsAction="always" android:title="Finance"/>
+    <item
+        android:id="@+id/mainPage"  app:showAsAction="never" android:title="Main Page"/>
+    <item
+        android:id="@+id/profile"  app:showAsAction="never" android:title="Profile"/>
+    <item
+        android:id="@+id/exit"  app:showAsAction="never" android:title="Exit"/>
+
+</menu>

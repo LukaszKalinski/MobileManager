@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">MobileManager</string>
+
+
+    //Login activity
+    <string name="LoginActivity_UserName">Username</string>
+    <string name="LoginActivity_Password">Password</string>
+    <string name="LoginActivity_CreateAccount">Create Account</string>
+    <string name="LoginActivity_LoginToGame">Sign into game</string>
+
+    //Finance activity
+    <string name="activityFinanceAccount">Account Balance: </string>
+</resources>
