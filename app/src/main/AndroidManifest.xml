@@ -24,6 +24,7 @@
         <activity android:name=".ActivityStadium"></activity>
         <activity android:name=".ActivityTeam"></activity>
         <activity android:name=".Profile"></activity>
+        <activity android:name=".ActivityResults"></activity>
 
 
     </application>

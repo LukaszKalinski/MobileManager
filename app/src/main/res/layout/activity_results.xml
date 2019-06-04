@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/activityTeamImageView"
+        android:id="@+id/activityResultImageView"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -14,25 +14,26 @@
         tools:layout_editor_absoluteX="16dp" />
 
     <TextView
-        android:id="@+id/activityTeamHeader"
+        android:id="@+id/activityResultsHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="4dp"
         android:padding="5dp"
-        android:text="@string/activityTeamPlayers"
+        android:text="@string/activityResultsCurrentTable"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/activityTeamImageView"
-        app:layout_constraintTop_toTopOf="@+id/activityTeamImageView" />
+        app:layout_constraintStart_toStartOf="@+id/activityResultImageView"
+        app:layout_constraintTop_toTopOf="@+id/activityResultImageView" />
 
     <ListView
-        android:id="@+id/activityTeamListView"
+        android:id="@+id/activityResultsTable"
         android:layout_width="300dp"
-        android:layout_height="675dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activityTeamImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/activityResultImageView" />
 </android.support.constraint.ConstraintLayout>

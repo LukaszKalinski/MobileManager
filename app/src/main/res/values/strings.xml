@@ -15,4 +15,18 @@
     <string name="activityFinanceCurrentWage">Current Wage Total: </string>
     <string name="activityFinanceMaxWage">Maximum Wage: </string>
     <string name="activityFinanceCurrentMaxWage">Current Max Wage: </string>
+    <string name="activityFinanceHeader">Club Finance</string>
+
+    //Calendar activity
+    <string name="activityCalendarHeader">Calendar</string>
+    <string name="activityCalendarLastMatch">Last Match:</string>
+    <string name="activityCalendarNextMatches">Next Match:</string>
+    <string name="activityCalendarLastResults">Last 3 results:</string>
+
+    //Results activity
+    <string name="activityResultsCurrentTable">Current Table:</string>
+
+    //Team activity
+    <string name="activityTeamPlayers">Players:</string>
+
 </resources>

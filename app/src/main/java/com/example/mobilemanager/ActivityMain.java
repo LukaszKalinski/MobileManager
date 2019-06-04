@@ -12,6 +12,7 @@ public class ActivityMain extends AppCompatActivity {
 
     String loggedUserName;
     DatabaseClubFinance clubFinanceDb;
+    DatabaseTeams teamdDb;
 
 
     @Override
@@ -20,10 +21,17 @@ public class ActivityMain extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         clubFinanceDb = new DatabaseClubFinance(this,getLogin());
+        teamdDb = new DatabaseTeams(this, getLogin());
 
         //Checking if Databases exists
         checkIfClubFinanceDbExist();
+        checkIfTeamsDbExist();
 
+        teamdDb.open();
+        for (int i = 0; i < teamdDb.getAllClubs().getCount(); i++){
+            System.out.println(teamdDb.getClubName(i));
+        }
+        teamdDb.close();
 
 
     }
@@ -90,12 +98,26 @@ public class ActivityMain extends AppCompatActivity {
     public void checkIfClubFinanceDbExist(){
         clubFinanceDb.open();
         if (clubFinanceDb.getRecords().getCount() > 0){
-            System.out.println("DatabaseClubFinance already EXISTS");
+            System.out.println("DatabaseTeams already EXISTS");
             System.out.println("and BALANCE is: " + clubFinanceDb.getAccountBalance(getLogin()));
         } else {
             clubFinanceDb.firstAddition(getLogin());
         }
         clubFinanceDb.close();
+    }
+
+    public void checkIfTeamsDbExist(){
+        teamdDb.open();
+        if (teamdDb.getAllClubs().getCount() > 0){
+            System.out.println("DatabaseTeams already EXISTS");
+            System.out.println("and amount of teams is: " + String.valueOf(teamdDb.getAllClubs().getCount()));
+        } else {
+            teamdDb.createTeams(getLogin());
+            for (int i = 0; i < 15; i ++){
+                teamdDb.createTeams("Player" + i);
+            }
+        }
+        teamdDb.close();
     }
 
     public void earnedMoney(double incomes){

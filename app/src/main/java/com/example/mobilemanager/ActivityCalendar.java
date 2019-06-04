@@ -6,14 +6,33 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+
 public class ActivityCalendar extends AppCompatActivity {
 
     String loggedUserName;
+    Button activityCalendarLastMatchBtn;
+    Button activityCalendarNextMatchBtn;
+    Button activityCalendarLastResult1;
+    Button activityCalendarLastResult2;
+    Button activityCalendarLastResult3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
+
+        activityCalendarLastMatchBtn = (Button) findViewById(R.id.activityCalendarLastMatchBtn);
+        activityCalendarLastMatchBtn.setText("home 0 - 0 away");
+        activityCalendarNextMatchBtn = (Button) findViewById(R.id.activityCalendarNextMatchBtn);
+        activityCalendarNextMatchBtn.setText("home    -    away");
+        activityCalendarLastResult1 = (Button) findViewById(R.id.activityCalendarLastResult1);
+        activityCalendarLastResult1.setText("home 1 - 0 away");
+        activityCalendarLastResult2 = (Button) findViewById(R.id.activityCalendarLastResult2);
+        activityCalendarLastResult2.setText("home 1 - 2 away");
+        activityCalendarLastResult3 = (Button) findViewById(R.id.activityCalendarLastResult3);
+        activityCalendarLastResult3.setText("home 3 - 0 away");
+
     }
 
     @Override

@@ -5,14 +5,188 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/activityCalendarImageVIew4"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/activityCalendarImageVIew3"
+        app:srcCompat="@android:color/darker_gray"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <ImageView
+        android:id="@+id/activityCalendarImageVIew6"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/activityCalendarImageVIew5"
+        app:srcCompat="@android:color/darker_gray"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <ImageView
+        android:id="@+id/activityCalendarImageVIew8"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/activityCalendarImageVIew1"
+        app:srcCompat="@android:color/darker_gray"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <ImageView
+        android:id="@+id/activityCalendarImageVIew1"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@color/colorPrimary"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <ImageView
+        android:id="@+id/activityCalendarImageVIew"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/activityCalendarImageVIew8"
+        app:srcCompat="@android:color/background_light"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ImageView
+        android:id="@+id/activityCalendarImageVIew5"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/activityCalendarImageVIew4"
+        app:srcCompat="@android:color/background_light"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ImageView
+        android:id="@+id/activityCalendarImageVIew9"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/activityCalendarImageVIew6"
+        app:srcCompat="@android:color/background_light"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ImageView
+        android:id="@+id/activityCalendarImageVIew3"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/activityCalendarImageVIew2"
+        app:srcCompat="@android:color/background_light"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ImageView
+        android:id="@+id/activityCalendarImageVIew2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/activityCalendarImageVIew"
+        app:srcCompat="@android:color/darker_gray"
+        tools:layout_editor_absoluteX="16dp" />
+
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/activityCalendarHeader5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Calendar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:padding="5dp"
+        android:text="@string/activityCalendarHeader"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/activityCalendarImageVIew1"
+        app:layout_constraintTop_toTopOf="@+id/activityCalendarImageVIew1" />
+
+    <TextView
+        android:id="@+id/activityCalendarHeader2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:padding="5dp"
+        android:text="@string/activityCalendarLastMatch"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/activityCalendarImageVIew1"
+        app:layout_constraintTop_toTopOf="@+id/activityCalendarImageVIew8" />
+
+    <TextView
+        android:id="@+id/activityCalendarHeader4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:padding="5dp"
+        android:text="@string/activityCalendarNextMatches"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/activityCalendarImageVIew1"
+        app:layout_constraintTop_toTopOf="@+id/activityCalendarImageVIew2" />
+
+    <TextView
+        android:id="@+id/activityCalendarHeader7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:padding="5dp"
+        android:text="@string/activityCalendarLastResults"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/activityCalendarImageVIew1"
+        app:layout_constraintTop_toTopOf="@+id/activityCalendarImageVIew4" />
+
+    <Button
+        android:id="@+id/activityCalendarLastMatchBtn"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+        android:background="@android:color/transparent"
+        android:text="home 0 - 0 away"
+        app:layout_constraintEnd_toStartOf="@+id/activityCalendarImageVIew"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/activityCalendarImageVIew"
+        app:layout_constraintTop_toBottomOf="@+id/activityCalendarImageVIew8" />
+
+    <Button
+        android:id="@+id/activityCalendarLastResult1"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+        android:background="@android:color/transparent"
+        android:text="home 0 - 0 away"
+        app:layout_constraintEnd_toStartOf="@+id/activityCalendarImageVIew"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/activityCalendarImageVIew"
+        app:layout_constraintTop_toTopOf="@+id/activityCalendarImageVIew5" />
+
+    <Button
+        android:id="@+id/activityCalendarLastResult2"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+        android:background="@android:color/transparent"
+        android:text="home 0 - 0 away"
+        app:layout_constraintEnd_toStartOf="@+id/activityCalendarImageVIew"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/activityCalendarImageVIew"
+        app:layout_constraintTop_toTopOf="@+id/activityCalendarImageVIew6" />
+
+    <Button
+        android:id="@+id/activityCalendarLastResult3"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+        android:background="@android:color/transparent"
+        android:text="home 0 - 0 away"
+        app:layout_constraintEnd_toStartOf="@+id/activityCalendarImageVIew"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/activityCalendarImageVIew"
+        app:layout_constraintTop_toTopOf="@+id/activityCalendarImageVIew9" />
+
+    <Button
+        android:id="@+id/activityCalendarNextMatchBtn"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+        android:background="@android:color/transparent"
+        android:text="home    -    away"
+        app:layout_constraintEnd_toStartOf="@+id/activityCalendarImageVIew"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/activityCalendarImageVIew"
+        app:layout_constraintTop_toTopOf="@+id/activityCalendarImageVIew3" />
 </android.support.constraint.ConstraintLayout>
