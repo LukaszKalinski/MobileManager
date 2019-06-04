@@ -11,7 +11,7 @@ import android.widget.Toast;
 public class ActivityMain extends AppCompatActivity {
 
     String loggedUserName;
-    DatabaseFinance financeDb;
+    DatabaseClubFinance clubFinanceDb;
 
 
     @Override
@@ -19,10 +19,10 @@ public class ActivityMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        financeDb = new DatabaseFinance(this, getLogin());
+        clubFinanceDb = new DatabaseClubFinance(this,getLogin());
 
         //Checking if Databases exists
-        checkIfFinanceDbExist();
+        checkIfClubFinanceDbExist();
 
 
 
@@ -87,23 +87,21 @@ public class ActivityMain extends AppCompatActivity {
         return loggedUserName;
     }
 
-    public void checkIfFinanceDbExist(){
-        financeDb.open();
-        if (financeDb.getRecords().getCount() > 0){
-            System.out.println("DatabaseFinance already EXISTS");
-            System.out.println("and BALANCE is: " + financeDb.getAccountBalance(getLogin()));
+    public void checkIfClubFinanceDbExist(){
+        clubFinanceDb.open();
+        if (clubFinanceDb.getRecords().getCount() > 0){
+            System.out.println("DatabaseClubFinance already EXISTS");
+            System.out.println("and BALANCE is: " + clubFinanceDb.getAccountBalance(getLogin()));
         } else {
-            financeDb.firstAdd(getLogin());
+            clubFinanceDb.firstAddition(getLogin());
         }
-        financeDb.close();
+        clubFinanceDb.close();
     }
 
-    public void earnedMoney(int incomes){
-        financeDb.open();
+    public void earnedMoney(double incomes){
+        clubFinanceDb.open();
         String login = getLogin();
-        int currentBalance = financeDb.getAccountBalance(login);
-        financeDb.refreshAccountBalance(login,currentBalance,incomes);
-        int newBalance = financeDb.getAccountBalance(login);
-        System.out.println("New BALANCE is: " + newBalance);
+        clubFinanceDb.refreshClubFinance(login,incomes,0,0);
+        System.out.println("New BALANCE is: " + clubFinanceDb.getAccountBalance(login));
     }
 }

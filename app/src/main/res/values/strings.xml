@@ -10,4 +10,9 @@
 
     //Finance activity
     <string name="activityFinanceAccount">Account Balance: </string>
+    <string name="activityFinanceTransferBudget">Transfer Budget: </string>
+    <string name="activityFinanceWageBudget">Wage Budget: </string>
+    <string name="activityFinanceCurrentWage">Current Wage Total: </string>
+    <string name="activityFinanceMaxWage">Maximum Wage: </string>
+    <string name="activityFinanceCurrentMaxWage">Current Max Wage: </string>
 </resources>

@@ -11,19 +11,32 @@ import android.widget.TextView;
 public class ActivityFinance extends AppCompatActivity {
 
     String loggedUserName;
-    DatabaseFinance financeDb;
+    DatabaseClubFinance clubFinanceDb;
     TextView activityFinanceAccountBalance;
+    TextView activityFinanceTransferBudget;
+    TextView activityFinanceWageBudget;
+    TextView activityFinanceCurrentWage;
+    TextView activityFinanceMaxWage;
+    TextView activityFinanceCurrentMaxWage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finance);
 
-        financeDb = new DatabaseFinance(this, getLogin());
+        clubFinanceDb = new DatabaseClubFinance(this, getLogin());
         activityFinanceAccountBalance = (TextView) findViewById(R.id.activityFinanceAccountBalance);
         setAccountBalance();
-
-
+        activityFinanceTransferBudget = (TextView) findViewById(R.id.activityFinanceTransferBudget);
+        setTransferBudget();
+        activityFinanceWageBudget = (TextView) findViewById(R.id.activityFinanceWageBudget);
+        setWageBudget();
+        activityFinanceCurrentWage = (TextView) findViewById(R.id.activityFinanceCurrentWage);
+        getCurrentWageBudget();
+        activityFinanceMaxWage = (TextView) findViewById(R.id.activityFinanceMaxWage);
+        setMaxPossibleWage();
+        activityFinanceCurrentMaxWage = (TextView) findViewById(R.id.activityFinanceCurrentMaxWage);
+        getMaxWage();
 
     }
 
@@ -85,41 +98,105 @@ public class ActivityFinance extends AppCompatActivity {
         return loggedUserName;
     }
 
-    public void earnedMoney(int incomes){
-        financeDb.open();
+    public void earnedMoney(double incomes){
+        clubFinanceDb.open();
         String login = getLogin();
-        int currentBalance = financeDb.getAccountBalance(login);
-        financeDb.refreshAccountBalance(login,currentBalance,incomes);
-        int newBalance = financeDb.getAccountBalance(login);
-        System.out.println("New BALANCE is: " + newBalance);
+        clubFinanceDb.refreshClubFinance(login,incomes,0,0);
+        System.out.println("New BALANCE is: " + clubFinanceDb.getAccountBalance(login));
     }
 
-    public int getBalance(){
-        financeDb.open();
+    public double getBalance(){
+        clubFinanceDb.open();
         String login = getLogin();
-        int currentBalance = financeDb.getAccountBalance(login);
+        double currentBalance = clubFinanceDb.getAccountBalance(login);
         return currentBalance;
     }
 
     public void setAccountBalance(){
-        if (getBalance()>= 1000000){
-            Double balance = Double.parseDouble(String.valueOf(getBalance()/1000000));
+        clubFinanceDb.open();
+        Double balance = Double.parseDouble(String.valueOf(clubFinanceDb.getAccountBalance(getLogin())));
+        if (balance >= 1000000){
             java.text.DecimalFormat df = new java.text.DecimalFormat();
             df.setMaximumFractionDigits(3);
             df.setMinimumFractionDigits(3);
-            df.format(balance);
-            activityFinanceAccountBalance.setText(String.valueOf(balance + " mln"));
+            activityFinanceAccountBalance.setText(String.valueOf("$ " + df.format(balance/1000000) + " M"));
         } else {
-            if (getBalance() < 1000000 && getBalance() >= 1000) {
-                Double balance = Double.parseDouble(String.valueOf(getBalance()/1000));
+            if (balance < 1000000 && balance >= 1000) {
                 java.text.DecimalFormat df = new java.text.DecimalFormat();
                 df.setMaximumFractionDigits(3);
                 df.setMinimumFractionDigits(3);
-                df.format(balance);
-                activityFinanceAccountBalance.setText(String.valueOf(balance + " k"));
+                activityFinanceAccountBalance.setText(String.valueOf("$ " + df.format(balance/1000) + " k $"));
             } else {
-                activityFinanceAccountBalance.setText(String.valueOf(getBalance()));
+                java.text.DecimalFormat df = new java.text.DecimalFormat();
+                df.setMaximumFractionDigits(3);
+                df.setMinimumFractionDigits(3);
+                activityFinanceAccountBalance.setText(String.valueOf("$ " + df.format(balance) + " $"));
             }
         }
+        clubFinanceDb.close();
+    }
+
+    public void setTransferBudget(){
+        clubFinanceDb.open();
+        Double transferBudget = Double.valueOf(clubFinanceDb.getTransferBudget(getLogin()));
+        if (transferBudget>= 1000000){
+            java.text.DecimalFormat df = new java.text.DecimalFormat();
+            df.setMaximumFractionDigits(3);
+            df.setMinimumFractionDigits(3);
+            activityFinanceTransferBudget.setText(String.valueOf("$ " + df.format(transferBudget/1000000) + " M"));
+        } else {
+            if (transferBudget < 1000000 && transferBudget >= 1000) {
+                java.text.DecimalFormat df = new java.text.DecimalFormat();
+                df.setMaximumFractionDigits(3);
+                df.setMinimumFractionDigits(3);
+                activityFinanceTransferBudget.setText(String.valueOf("$ " + df.format(transferBudget/1000) + " k"));
+            } else {
+                java.text.DecimalFormat df = new java.text.DecimalFormat();
+                df.setMaximumFractionDigits(3);
+                df.setMinimumFractionDigits(3);
+                activityFinanceTransferBudget.setText(String.valueOf("$ " + df.format(transferBudget) + " $"));
+            }
+        }
+        clubFinanceDb.close();
+    }
+
+    public void setWageBudget(){
+        clubFinanceDb.open();
+        Double wageBudget = Double.valueOf(clubFinanceDb.getWageBudget(getLogin()));
+        java.text.DecimalFormat df = new java.text.DecimalFormat();
+        df.setMaximumFractionDigits(3);
+        df.setMinimumFractionDigits(3);
+        activityFinanceWageBudget.setText(String.valueOf("$ " + df.format(wageBudget/1000) + " k per week"));
+        clubFinanceDb.close();
+    }
+
+    public void getCurrentWageBudget(){
+        clubFinanceDb.open();
+        Double currentWage = Double.valueOf(clubFinanceDb.getCurrentWages(getLogin()));
+        java.text.DecimalFormat df = new java.text.DecimalFormat();
+        df.setMaximumFractionDigits(3);
+        df.setMinimumFractionDigits(3);
+        activityFinanceCurrentWage.setText(String.valueOf("$ " + df.format(currentWage/1000) + " k per week"));
+        clubFinanceDb.close();
+    }
+
+    public void setMaxPossibleWage(){
+        clubFinanceDb.open();
+        Double maxWage = Double.valueOf(clubFinanceDb.getMaxPossWage(getLogin()));
+        java.text.DecimalFormat df = new java.text.DecimalFormat();
+        df.setMaximumFractionDigits(3);
+        df.setMinimumFractionDigits(3);
+        activityFinanceMaxWage.setText(String.valueOf("$ " + df.format(maxWage/1000) + " k per week"));
+        clubFinanceDb.close();
+    }
+
+    public void getMaxWage(){
+        clubFinanceDb.open();
+        Double currentMaxWage = Double.valueOf(clubFinanceDb.getCurrentMaxWage(getLogin()));
+        java.text.DecimalFormat df = new java.text.DecimalFormat();
+        df.setMaximumFractionDigits(3);
+        df.setMinimumFractionDigits(3);
+        activityFinanceCurrentMaxWage.setText(String.valueOf("$ " + df.format(currentMaxWage/1000) + " k per week"));
+        clubFinanceDb.close();
     }
 }

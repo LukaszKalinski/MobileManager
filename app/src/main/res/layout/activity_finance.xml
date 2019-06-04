@@ -9,34 +9,201 @@
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:color/holo_blue_dark"
+        app:srcCompat="@android:color/background_light"
         tools:layout_editor_absoluteX="10dp" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:srcCompat="@android:color/darker_gray"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:srcCompat="@android:color/background_light"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:srcCompat="@android:color/background_light"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:srcCompat="@android:color/darker_gray"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView6"
+        app:srcCompat="@android:color/darker_gray"
+        tools:layout_editor_absoluteX="0dp" />
 
     <TextView
         android:id="@+id/activityFinanceAccountBalance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="25dp"
+        android:layout_marginStart="164dp"
+        android:layout_marginLeft="164dp"
         android:padding="5dp"
         android:text="Balance"
-        android:textColor="@android:color/holo_orange_light"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView2"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/activityFinanceHeader1"
+        app:layout_constraintStart_toStartOf="@+id/imageView2" />
+
+    <TextView
+        android:id="@+id/activityFinanceTransferBudget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="164dp"
+        android:layout_marginLeft="164dp"
+        android:padding="5dp"
+        android:text="Balance"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/activityFinanceHeader2"
+        app:layout_constraintStart_toStartOf="@+id/imageView2" />
+
+    <TextView
+        android:id="@+id/activityFinanceWageBudget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="164dp"
+        android:layout_marginLeft="164dp"
+        android:padding="5dp"
+        android:text="Balance"
+        android:textColor="@android:color/holo_green_light"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/activityFinanceHeader"
+        app:layout_constraintStart_toStartOf="@+id/imageView2" />
+
+    <TextView
+        android:id="@+id/activityFinanceCurrentWage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="164dp"
+        android:layout_marginLeft="164dp"
+        android:padding="5dp"
+        android:text="Balance"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/activityFinanceHeader3"
+        app:layout_constraintStart_toStartOf="@+id/imageView2" />
+
+    <TextView
+        android:id="@+id/activityFinanceMaxWage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="164dp"
+        android:layout_marginLeft="164dp"
+        android:padding="5dp"
+        android:text="Balance"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/activityFinanceHeader4"
+        app:layout_constraintStart_toStartOf="@+id/imageView2" />
+
+    <TextView
+        android:id="@+id/activityFinanceCurrentMaxWage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="164dp"
+        android:layout_marginLeft="164dp"
+        android:padding="5dp"
+        android:text="Balance"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/activityFinanceHeader5"
+        app:layout_constraintStart_toStartOf="@+id/imageView2" />
+
+    <TextView
+        android:id="@+id/activityFinanceHeader1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:padding="5dp"
+        android:text="@string/activityFinanceAccount"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
     <TextView
-        android:id="@+id/activityFinanceAccount"
+        android:id="@+id/activityFinanceHeader2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        android:layout_marginRight="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
         android:padding="5dp"
-        android:text="@string/activityFinanceAccount"
-        android:textColor="@android:color/holo_orange_light"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/activityFinanceAccountBalance"
-        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+        android:text="@string/activityFinanceTransferBudget"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+    <TextView
+        android:id="@+id/activityFinanceHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:padding="5dp"
+        android:text="@string/activityFinanceWageBudget"
+        android:textColor="@android:color/holo_green_light"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView4" />
+
+    <TextView
+        android:id="@+id/activityFinanceHeader3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:padding="5dp"
+        android:text="@string/activityFinanceCurrentWage"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView5" />
+
+    <TextView
+        android:id="@+id/activityFinanceHeader4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:padding="5dp"
+        android:text="@string/activityFinanceMaxWage"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView6" />
+
+    <TextView
+        android:id="@+id/activityFinanceHeader5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:padding="5dp"
+        android:text="@string/activityFinanceCurrentMaxWage"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView7" />
 </android.support.constraint.ConstraintLayout>
