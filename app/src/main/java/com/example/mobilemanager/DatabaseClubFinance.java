@@ -61,7 +61,7 @@ public class DatabaseClubFinance {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            System.out.println("DatabaseTeams: " + DATABASE_CREATE);
+            System.out.println("DatabaseResults: " + DATABASE_CREATE);
             db.execSQL(DATABASE_CREATE);
         }
 

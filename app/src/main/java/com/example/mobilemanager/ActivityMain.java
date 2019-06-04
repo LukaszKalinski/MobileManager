@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class ActivityMain extends AppCompatActivity {
@@ -13,6 +15,9 @@ public class ActivityMain extends AppCompatActivity {
     String loggedUserName;
     DatabaseClubFinance clubFinanceDb;
     DatabaseTeams teamdDb;
+    DatabaseResults resultsDb;
+
+    Button getResultsButton;
 
 
     @Override
@@ -20,19 +25,24 @@ public class ActivityMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getResultsButton = (Button) findViewById(R.id.getResultsButton);
+
         clubFinanceDb = new DatabaseClubFinance(this,getLogin());
         teamdDb = new DatabaseTeams(this, getLogin());
+        resultsDb = new DatabaseResults(this, getLogin());
 
         //Checking if Databases exists
         checkIfClubFinanceDbExist();
         checkIfTeamsDbExist();
+        checkIfResultsDbExist();
 
-        teamdDb.open();
-        for (int i = 0; i < teamdDb.getAllClubs().getCount(); i++){
-            System.out.println(teamdDb.getClubName(i));
-        }
-        teamdDb.close();
-
+        getResultsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ActivityMain.this, ActivityResults.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -98,7 +108,7 @@ public class ActivityMain extends AppCompatActivity {
     public void checkIfClubFinanceDbExist(){
         clubFinanceDb.open();
         if (clubFinanceDb.getRecords().getCount() > 0){
-            System.out.println("DatabaseTeams already EXISTS");
+            System.out.println("DatabaseResults already EXISTS");
             System.out.println("and BALANCE is: " + clubFinanceDb.getAccountBalance(getLogin()));
         } else {
             clubFinanceDb.firstAddition(getLogin());
@@ -109,7 +119,7 @@ public class ActivityMain extends AppCompatActivity {
     public void checkIfTeamsDbExist(){
         teamdDb.open();
         if (teamdDb.getAllClubs().getCount() > 0){
-            System.out.println("DatabaseTeams already EXISTS");
+            System.out.println("DatabaseResults already EXISTS");
             System.out.println("and amount of teams is: " + String.valueOf(teamdDb.getAllClubs().getCount()));
         } else {
             teamdDb.createTeams(getLogin());
@@ -118,6 +128,17 @@ public class ActivityMain extends AppCompatActivity {
             }
         }
         teamdDb.close();
+    }
+
+    public void checkIfResultsDbExist(){
+        resultsDb.open();
+        if (resultsDb.getAllResults().getCount() > 0){
+            System.out.println("DatabaseResults already EXISTS");
+            System.out.println("and amount of matches are: " + String.valueOf(resultsDb.getAllResults().getCount()));
+        } else {
+            System.out.println("Need to create first match later");
+        }
+        resultsDb.close();
     }
 
     public void earnedMoney(double incomes){
