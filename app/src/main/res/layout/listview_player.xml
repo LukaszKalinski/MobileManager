@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/playerRow"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Jan"
+    android:textSize="14sp">
+
+    <TextView
+        android:id="@+id/listViewPlayersNumber"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="Number"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/listViewPlayersName"
+        android:layout_width="180dp"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="Name"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/listViewPlayersPosition"
+        android:layout_width="90dp"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="Position"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/listViewPlayersGkSkills"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="GKS"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/listViewPlayersDefSkills"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="DefS"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/listViewPlayersAttSkills"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="AttS"
+        android:textSize="15dp" />
+
+</LinearLayout>

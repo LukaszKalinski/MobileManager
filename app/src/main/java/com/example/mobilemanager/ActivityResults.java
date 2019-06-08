@@ -6,6 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 
 public class ActivityResults extends AppCompatActivity {
 
@@ -13,7 +17,7 @@ public class ActivityResults extends AppCompatActivity {
     ListView activityResultsTable;
     DatabaseResults resultsDb;
     DatabaseTeams teamsDb;
-
+    public static ArrayList<TeamTableScores> teamTableScores = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +29,19 @@ public class ActivityResults extends AppCompatActivity {
         activityResultsTable = (ListView) findViewById(R.id.activityResultsTable);
 
         checkIfResultsDbExist();
-
         fastLogTableCheck();
 
+        refreshScoreTable();
+
+        Log.d("teamPoint", getSingleResult(0,1));
+        Log.d("teamPoint", getSingleResult(0,2));
+
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        refreshScoreTable();
     }
 
     public String getLogin(){
@@ -74,26 +88,36 @@ public class ActivityResults extends AppCompatActivity {
                 if (x1 != x2){
                     String homeTeam = teamsDb.getClubName(x1);
                     String awayTeam = teamsDb.getClubName(x2);
-                    resultsDb.createMatch("someDay", homeTeam, awayTeam);
+                    resultsDb.createMatch("0", homeTeam, awayTeam);
 //                    System.out.println("Created Match: " + homeTeam + " - " + awayTeam);
                 }
             }
         }
         teamsDb.close();
         resultsDb.close();
+
+        setRoundsToMatches();
     }
 
-    public void playSingleMatch(int a, int b){
+    public void playSingleMatch(int x1, int x2){
         teamsDb.open();
-        String homeTeam = teamsDb.getClubName(a);
-        String awayTeam = teamsDb.getClubName(b);
+        String homeTeam = teamsDb.getClubName(x1);
+        String awayTeam = teamsDb.getClubName(x2);
+
+        //Logika meczu
+        int homeTeamAttackPower = teamsDb.getAttackClubPower(x1);
+        int homeTeamDefencePower = teamsDb.getDefenceClubPower(x1);
+        int awayTeamAttackPower = teamsDb.getAttackClubPower(x2);
+        int awayTeamDefencePower = teamsDb.getDefenceClubPower(x2);
+
+        double homeScoreLuck = (Math.random()*100 + 50);
+        double awayScoreLuck = (Math.random()*100 + 50);
+
         resultsDb.open();
-        int homeScore = 3;
-        int awayScore = 1;
+        int homeScore = (int) (Math.min(10, (homeTeamAttackPower/awayTeamDefencePower)*(homeScoreLuck/100)));
+        int awayScore = (int) (Math.min(10, (awayTeamAttackPower/homeTeamDefencePower)*(awayScoreLuck/100)));
         resultsDb.playMatch(homeTeam, homeScore, awayTeam, awayScore);
-        String homeScoreDb =  String.valueOf(resultsDb.getSpecifiedResultHomeScore(homeTeam, awayTeam));
-        String awayScoreDb = String.valueOf(resultsDb.getSpecifiedResultAwayScore(homeTeam, awayTeam));
-        System.out.println("Match: " + homeTeam + " " + String.valueOf(homeScoreDb) + " - " + String.valueOf(awayScoreDb) + " " + awayTeam);
+//                    System.out.println("Match: " + homeTeam + " " + homeScore + " - " + awayScore + " " + awayTeam);
         resultsDb.close();
         teamsDb.close();
     }
@@ -109,8 +133,18 @@ public class ActivityResults extends AppCompatActivity {
                 if (x1 != x2){
                     String homeTeam = teamsDb.getClubName(x1);
                     String awayTeam = teamsDb.getClubName(x2);
-                    int homeScore = (int) (Math.random()*3);
-                    int awayScore = (int) (Math.random()*3);
+
+                    //Logika meczu
+                    int homeTeamAttackPower = teamsDb.getAttackClubPower(x1);
+                    int homeTeamDefencePower = teamsDb.getDefenceClubPower(x1);
+                    int awayTeamAttackPower = teamsDb.getAttackClubPower(x2);
+                    int awayTeamDefencePower = teamsDb.getDefenceClubPower(x2);
+
+                    double homeScoreLuck = (Math.random()*100 + 50);
+                    double awayScoreLuck = (Math.random()*100 + 50);
+
+                    int homeScore = (int) (Math.min(10, (homeTeamAttackPower/awayTeamDefencePower)*(homeScoreLuck/100)));
+                    int awayScore = (int) (Math.min(10, (awayTeamAttackPower/homeTeamDefencePower)*(awayScoreLuck/100)));
                     resultsDb.playMatch(homeTeam, homeScore, awayTeam, awayScore);
 //                    System.out.println("Match: " + homeTeam + " " + homeScore + " - " + awayScore + " " + awayTeam);
                 }
@@ -160,6 +194,15 @@ public class ActivityResults extends AppCompatActivity {
         return result;
     }
 
+    public int getMatchesAmountOfTeam(int a){
+        resultsDb.open();
+        teamsDb.open();
+        int result = resultsDb.getMatchesAmount(teamsDb.getClubName(a));
+        teamsDb.close();
+        resultsDb.close();
+        return result;
+    }
+
     public void fastLogTableCheck(){
         teamsDb.open();
         int aMax = teamsDb.getAllClubs().getCount();
@@ -173,4 +216,54 @@ public class ActivityResults extends AppCompatActivity {
             Log.d("teamPoint", teamName + ": " + getPointsOfTeam(a) + " pkt., goals: " + getScoredGoalsOfTeam(a) + "-" + getLostGoalsOfTeam(a));
         }
     }
+
+    public ArrayList<TeamTableScores> loadScoreTable(){
+        ArrayList<TeamTableScores> list = new ArrayList<>();
+        teamsDb.open();
+        int aMax = teamsDb.getAllClubs().getCount();
+        teamsDb.close();
+        int a;
+            for (a = 0; a < aMax; a++){
+                teamsDb.open();
+                String teamName = teamsDb.getClubName(a);
+                teamsDb.close();
+                int position = a + 1;
+                int matches = getMatchesAmountOfTeam(a);
+                int points = getPointsOfTeam(a);
+                int scoredGoals = getScoredGoalsOfTeam(a);
+                int lostGoals = getLostGoalsOfTeam(a);
+                TeamTableScores singleResult = new TeamTableScores(position, teamName, matches, points, scoredGoals, lostGoals);
+                list.add(singleResult);
+            }
+        Collections.sort(list, new Comparator<TeamTableScores>() {
+            @Override
+            public int compare(TeamTableScores o1, TeamTableScores o2) {
+                return o2.points - o1.points;
+            }
+        });
+        return list;
+        }
+
+    private void refreshScoreTable(){
+        teamTableScores = loadScoreTable();
+        TeamTableScoresAdapter adapter = new TeamTableScoresAdapter(getApplicationContext(), teamTableScores);
+        activityResultsTable.setAdapter(adapter);
+    }
+
+    public void setRoundsToMatches(){
+//        teamsDb.open();
+//        resultsDb.open();
+//
+//
+//
+//
+//
+//        Cursor mCursor = resultsDb.getRoundMatches(112,0);
+//        int x = Integer.parseInt(mCursor.getString(1));
+//        Log.d("teamPoint", "getRoundMatch (0,1) is:" + x);
+//        resultsDb.close();
+//        teamsDb.close();
+    }
+
+
 }

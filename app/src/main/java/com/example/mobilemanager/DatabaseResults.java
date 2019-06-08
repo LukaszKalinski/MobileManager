@@ -89,8 +89,8 @@ public class DatabaseResults {
         initialValues.put(KEY_DATE, date);
         initialValues.put(KEY_HOME_TEAM, homeTeam);
         initialValues.put(KEY_AWAY_TEAM, awayTeam);
-        initialValues.put(KEY_HOME_SCORES, "0");
-        initialValues.put(KEY_AWAY_SCORES, "0");
+        initialValues.put(KEY_HOME_SCORES, "");
+        initialValues.put(KEY_AWAY_SCORES, "");
         initialValues.put(KEY_IS_PLAYED, "no");
         return db.insert(DATABASE_TABLE, null, initialValues);
     }
@@ -127,7 +127,7 @@ public class DatabaseResults {
 
     public int getPointsOfTeam(String name){
         Cursor cursor = db.rawQuery("SELECT * FROM " + DATABASE_TABLE +
-                " WHERE " + KEY_HOME_TEAM + "=?" , new String[] {name});
+                " WHERE " + KEY_HOME_TEAM + "=? AND " + KEY_IS_PLAYED + " =?" , new String[] {name, "yes"});
         cursor.moveToFirst();
         int result = 0;
         for (int a = 0; a < cursor.getCount(); a ++){
@@ -144,7 +144,7 @@ public class DatabaseResults {
         }
 
         Cursor cursor1 = db.rawQuery("SELECT * FROM " + DATABASE_TABLE +
-                " WHERE " + KEY_AWAY_TEAM + "=?" , new String[] {name});
+                " WHERE " + KEY_AWAY_TEAM + "=? AND " + KEY_IS_PLAYED + " =?" , new String[] {name, "yes"});
         cursor1.moveToFirst();
         for (int a = 0; a < cursor1.getCount(); a ++){
             int homeScore = Integer.parseInt(cursor1.getString(cursor1.getColumnIndex(KEY_HOME_SCORES)));
@@ -164,7 +164,7 @@ public class DatabaseResults {
 
     public int getScoredGoalsOfTeam(String name){
         Cursor cursor = db.rawQuery("SELECT * FROM " + DATABASE_TABLE +
-                " WHERE " + KEY_HOME_TEAM + "=?" , new String[] {name});
+                " WHERE " + KEY_HOME_TEAM + "=? AND " + KEY_IS_PLAYED + " =?" , new String[] {name, "yes"});
         cursor.moveToFirst();
         int result = 0;
         for (int a = 0; a < cursor.getCount(); a ++){
@@ -174,7 +174,7 @@ public class DatabaseResults {
         }
 
         Cursor cursor1 = db.rawQuery("SELECT * FROM " + DATABASE_TABLE +
-                " WHERE " + KEY_AWAY_TEAM + "=?" , new String[] {name});
+                " WHERE " + KEY_AWAY_TEAM + "=? AND " + KEY_IS_PLAYED + " =?" , new String[] {name, "yes"});
         cursor1.moveToFirst();
         for (int a = 0; a < cursor1.getCount(); a ++){
             int awayScore = Integer.parseInt(cursor1.getString(cursor1.getColumnIndex(KEY_AWAY_SCORES)));
@@ -187,7 +187,7 @@ public class DatabaseResults {
 
     public int getLostGoalsOfTeam(String name){
         Cursor cursor = db.rawQuery("SELECT * FROM " + DATABASE_TABLE +
-                " WHERE " + KEY_HOME_TEAM + "=?" , new String[] {name});
+                " WHERE " + KEY_HOME_TEAM + "=? AND " + KEY_IS_PLAYED + " =?" , new String[] {name, "yes"});
         cursor.moveToFirst();
         int result = 0;
         for (int a = 0; a < cursor.getCount(); a ++){
@@ -197,7 +197,7 @@ public class DatabaseResults {
         }
 
         Cursor cursor1 = db.rawQuery("SELECT * FROM " + DATABASE_TABLE +
-                " WHERE " + KEY_AWAY_TEAM + "=?" , new String[] {name});
+                " WHERE " + KEY_AWAY_TEAM + "=? AND " + KEY_IS_PLAYED + " =?" , new String[] {name, "yes"});
         cursor1.moveToFirst();
         for (int a = 0; a < cursor1.getCount(); a ++){
             int homeScore = Integer.parseInt(cursor1.getString(cursor1.getColumnIndex(KEY_HOME_SCORES)));
@@ -208,4 +208,38 @@ public class DatabaseResults {
         return result;
     }
 
+    public int getMatchesAmount(String name){
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DATABASE_TABLE +
+                " WHERE " + KEY_HOME_TEAM + "=? AND " + KEY_IS_PLAYED + " =?" , new String[] {name, "yes"});
+        cursor.moveToFirst();
+        int result = 0;
+        for (int a = 0; a < cursor.getCount(); a ++){
+            result = result + 1;
+            cursor.moveToNext();
+        }
+
+        Cursor cursor1 = db.rawQuery("SELECT * FROM " + DATABASE_TABLE +
+                " WHERE " + KEY_AWAY_TEAM + "=? AND " + KEY_IS_PLAYED + " =?" , new String[] {name, "yes"});
+        cursor1.moveToFirst();
+        for (int a = 0; a < cursor1.getCount(); a ++){
+            result = result + 1;
+            cursor1.moveToNext();
+        }
+
+        return result;
+    }
+
+    public long setRoundOfMatch(String date, String homeTeam, String awayTeam){
+        ContentValues initialValues = new ContentValues();
+        initialValues.put(KEY_DATE, date);
+                return db.update(DATABASE_TABLE, initialValues, KEY_HOME_TEAM + "=? AND "
+                        + KEY_AWAY_TEAM + " =?", new String[] {homeTeam, awayTeam});
+    }
+
+    public Cursor getRoundMatches(int round, int match){
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DATABASE_TABLE +
+                " WHERE " + KEY_DATE + "=?" , new String[] {String.valueOf(round)});
+        cursor.moveToPosition(match);
+        return cursor;
+    }
 }

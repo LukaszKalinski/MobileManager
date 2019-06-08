@@ -13,6 +13,8 @@ public class DatabaseTeams {
     public static final String KEY_ROWID = "_id";
     public static final String KEY_LOGIN = "Username";
     public static final String KEY_CLUB_NAME = "ClubName";
+    public static final String KEY_CLUB_ATTACK_POWER = "ClubAttackPower";
+    public static final String KEY_CLUB_DEFENCE_POWER = "ClubDefencePower";
     private static final String TAG = "DBAdapter";
 
     private static final int DATABASE_VERSION = 1;
@@ -34,8 +36,10 @@ public class DatabaseTeams {
         this.DATABASE_CREATE = "create table "
                 + DATABASE_TABLE
                 + " (_id integer primary key autoincrement, "
-                + KEY_LOGIN +", "
-                + KEY_CLUB_NAME +
+                + KEY_LOGIN + ", "
+                + KEY_CLUB_NAME + ", "
+                + KEY_CLUB_ATTACK_POWER + ", "
+                + KEY_CLUB_DEFENCE_POWER +
                 ")";
         DBHelper = new DatabaseHelper(context);
     }
@@ -75,12 +79,14 @@ public class DatabaseTeams {
         DBHelper.close();
     }
 
-    public long createTeams(String userName)
+    public long createTeams(String userName, int attackPower, int defencePower)
 
     {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_LOGIN, userName);
         initialValues.put(KEY_CLUB_NAME, "Club of " + userName);
+        initialValues.put(KEY_CLUB_ATTACK_POWER, String.valueOf(attackPower));
+        initialValues.put(KEY_CLUB_DEFENCE_POWER, String.valueOf(defencePower));
         return db.insert(DATABASE_TABLE, null, initialValues);
     }
 
@@ -101,6 +107,28 @@ public class DatabaseTeams {
         cursor.moveToPosition(id);
         String selectedClub = cursor.getString(cursor.getColumnIndex(KEY_CLUB_NAME));
         return selectedClub;
+    }
+
+    public int getAttackClubPower(int id) throws SQLException {
+        Cursor cursor = db.query(DATABASE_TABLE, null, null, null, null, null, null);
+        cursor.moveToPosition(id);
+        int selectedClub = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_CLUB_ATTACK_POWER)));
+        return selectedClub;
+    }
+
+    public int getDefenceClubPower(int id) throws SQLException {
+        Cursor cursor = db.query(DATABASE_TABLE, null, null, null, null, null, null);
+        cursor.moveToPosition(id);
+        int selectedClub = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_CLUB_DEFENCE_POWER)));
+        return selectedClub;
+    }
+
+    public long setClubPower(String team, int attackPower, int defencePower)
+    {
+        ContentValues initialValues = new ContentValues();
+        initialValues.put(KEY_CLUB_ATTACK_POWER, attackPower);
+        initialValues.put(KEY_CLUB_DEFENCE_POWER, defencePower);
+        return db.update(DATABASE_TABLE, initialValues, KEY_CLUB_NAME + "=?", new String[] {team});
     }
 
 }

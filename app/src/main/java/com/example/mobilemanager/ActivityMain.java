@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,8 +15,9 @@ public class ActivityMain extends AppCompatActivity {
 
     String loggedUserName;
     DatabaseClubFinance clubFinanceDb;
-    DatabaseTeams teamdDb;
+    DatabaseTeams teamsDb;
     DatabaseResults resultsDb;
+    DatabaseTeam playersDb;
 
     Button getResultsButton;
 
@@ -27,13 +29,15 @@ public class ActivityMain extends AppCompatActivity {
 
         getResultsButton = (Button) findViewById(R.id.getResultsButton);
 
-        clubFinanceDb = new DatabaseClubFinance(this,getLogin());
-        teamdDb = new DatabaseTeams(this, getLogin());
+        clubFinanceDb = new DatabaseClubFinance(this, getLogin());
+        teamsDb = new DatabaseTeams(this, getLogin());
         resultsDb = new DatabaseResults(this, getLogin());
+        playersDb = new DatabaseTeam(this, getLogin());
 
         //Checking if Databases exists
         checkIfClubFinanceDbExist();
         checkIfTeamsDbExist();
+        checkIfPlayersDbExist();
         checkIfResultsDbExist();
 
         getResultsButton.setOnClickListener(new View.OnClickListener() {
@@ -55,59 +59,59 @@ public class ActivityMain extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.msg:
                 intent = new Intent(this, ActivityMessages.class);
                 startActivity(intent);
                 finish();
-                return(true);
+                return (true);
             case R.id.team:
                 intent = new Intent(this, ActivityTeam.class);
                 startActivity(intent);
                 finish();
-                return(true);
+                return (true);
             case R.id.calendar:
                 intent = new Intent(this, ActivityCalendar.class);
                 startActivity(intent);
                 finish();
-                return(true);
+                return (true);
             case R.id.stadium:
                 intent = new Intent(this, ActivityStadium.class);
                 startActivity(intent);
                 finish();
-                return(true);
+                return (true);
             case R.id.finance:
                 intent = new Intent(this, ActivityFinance.class);
                 startActivity(intent);
                 finish();
-                return(true);
+                return (true);
             case R.id.mainPage:
                 intent = new Intent(this, ActivityMain.class);
                 startActivity(intent);
                 finish();
-                return(true);
+                return (true);
             case R.id.profile:
                 intent = new Intent(this, Profile.class);
                 startActivity(intent);
                 finish();
-                return(true);
+                return (true);
             case R.id.exit:
                 finish();
-                return(true);
+                return (true);
         }
-            return(super.onOptionsItemSelected(item));
-        }
+        return (super.onOptionsItemSelected(item));
+    }
 
-    public String getLogin(){
+    public String getLogin() {
         SharedPreferences sp1 = this.getSharedPreferences("Login", MODE_PRIVATE);
         loggedUserName = sp1.getString("Username", null);
-        Toast.makeText(this,"LOGIN" + loggedUserName, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "LOGIN" + loggedUserName, Toast.LENGTH_LONG).show();
         return loggedUserName;
     }
 
-    public void checkIfClubFinanceDbExist(){
+    public void checkIfClubFinanceDbExist() {
         clubFinanceDb.open();
-        if (clubFinanceDb.getRecords().getCount() > 0){
+        if (clubFinanceDb.getRecords().getCount() > 0) {
             System.out.println("DatabaseResults already EXISTS");
             System.out.println("and BALANCE is: " + clubFinanceDb.getAccountBalance(getLogin()));
         } else {
@@ -116,23 +120,25 @@ public class ActivityMain extends AppCompatActivity {
         clubFinanceDb.close();
     }
 
-    public void checkIfTeamsDbExist(){
-        teamdDb.open();
-        if (teamdDb.getAllClubs().getCount() > 0){
+    public void checkIfTeamsDbExist() {
+        teamsDb.open();
+        if (teamsDb.getAllClubs().getCount() > 0) {
             System.out.println("DatabaseResults already EXISTS");
-            System.out.println("and amount of teams is: " + String.valueOf(teamdDb.getAllClubs().getCount()));
+            System.out.println("and amount of teams is: " + String.valueOf(teamsDb.getAllClubs().getCount()));
         } else {
-            teamdDb.createTeams(getLogin());
-            for (int i = 0; i < 15; i ++){
-                teamdDb.createTeams("Player" + i);
+            teamsDb.createTeams(getLogin(), 1000, 1000);
+            for (int i = 0; i < 15; i++) {
+                int attackPower = (int) (Math.random() * 1000);
+                int defencePower = (int) (Math.random() * 1000);
+                teamsDb.createTeams("Team " + i, attackPower, defencePower);
             }
         }
-        teamdDb.close();
+        teamsDb.close();
     }
 
-    public void checkIfResultsDbExist(){
+    public void checkIfResultsDbExist() {
         resultsDb.open();
-        if (resultsDb.getAllResults().getCount() > 0){
+        if (resultsDb.getAllResults().getCount() > 0) {
             System.out.println("DatabaseResults already EXISTS");
             System.out.println("and amount of matches are: " + String.valueOf(resultsDb.getAllResults().getCount()));
         } else {
@@ -141,10 +147,89 @@ public class ActivityMain extends AppCompatActivity {
         resultsDb.close();
     }
 
-    public void earnedMoney(double incomes){
+    public void earnedMoney(double incomes) {
         clubFinanceDb.open();
         String login = getLogin();
-        clubFinanceDb.refreshClubFinance(login,incomes,0,0);
+        clubFinanceDb.refreshClubFinance(login, incomes, 0, 0);
         System.out.println("New BALANCE is: " + clubFinanceDb.getAccountBalance(login));
+    }
+
+    public void setTeamPower(int a, int attackPower, int defencePower) {
+        teamsDb.open();
+        teamsDb.setClubPower(teamsDb.getClubName(a), attackPower, defencePower);
+        Log.d("teamPoint", teamsDb.getClubName(a) +
+                " with attackPower: " + teamsDb.getAttackClubPower(a) +
+                ", with defencePower: " + teamsDb.getDefenceClubPower(a));
+        teamsDb.close();
+    }
+
+    public void checkIfPlayersDbExist() {
+        playersDb.open();
+        if (playersDb.getAllPlayers().getCount() > 0) {
+            Log.d("teamPoint", "DatabasePlayers already EXISTS");
+            Log.d("teamPoint", "and amount of players are: " + String.valueOf(playersDb.getAllPlayers().getCount()));
+        } else {
+            Log.d("teamPoint", "Creating players list");
+
+            createPlayer(1, 0, "Goalkeeper", 1, 1);
+            createPlayer(1, 10, "Goalkeeper", 1, 2);
+            createPlayer(1, 1, "Defender", 1, 4);
+            createPlayer(11, 1, "Defender", 1, 4);
+            createPlayer(5, 1, "Midfielder", 1, 4);
+            createPlayer(21, 1, "Midfielder", 1, 4);
+            createPlayer(9, 1, "Attacker", 1, 2);
+            createPlayer(31, 1, "Attacker", 1, 2);
+
+        }
+        playersDb.close();
+    }
+
+    public void createPlayer(int number, int nextNumber, String position, int startNumber, int end){
+
+        int gkSkillsValue = 100000;
+        int defSkillsValue = 2 * gkSkillsValue;
+        int attSkillsValue = 3 * gkSkillsValue;
+        String[] firstName = {"Antoni", "Jakub", "Jan", "Szymon", "Aleksander", "Franciszek", "Filip", "Mikolaj", "Wojciech", "Kacper", "Adam", "Marcel", "Stanislaw", "Michal", "Lukasz", "Wiktor", "Leon", "Piotr", "Nikodem", "Igor", "Ignacy", "Sebastian"};
+        String[] lastName = {"Nowak", "Kowalski", "Wisniewski", "Wojcik", "Wojcicki", "Kowalczyk", "Kaminski", "Lewandowski", "Zielinski", "Szymanski" , "Wozniak", "Dabrowski", "Kozlowski", "Jankowski", "Wojciechowski", "Kwiatkowski", "Mazur", "Krawczyk"};
+
+        for (int a = startNumber; a <= end; a++) {
+            number = number + nextNumber;
+            String name = firstName[(int) (Math.random() * firstName.length)] + " " + lastName[(int) (Math.random() * lastName.length)];
+
+            int gkSkills;
+            int defSkills;
+            int attSkills;
+
+            switch (position){
+                case "Goalkeeper":
+                    gkSkills = (int) (Math.random() * 100);
+                    defSkills = (int) (Math.random() * 0);
+                    attSkills = (int) (Math.random() * 0);
+                    break;
+                case "Defender":
+                    gkSkills = (int) (Math.random() * 0);
+                    defSkills = (int) (Math.random() * 100);
+                    attSkills = (int) (Math.random() * 0);
+                    break;
+                case "Midfielder":
+                    gkSkills = (int) (Math.random() * 0);
+                    defSkills = (int) (Math.random() * 100);
+                    attSkills = (int) (Math.random() * 100);
+                    break;
+                case "Attacker":
+                    gkSkills = (int) (Math.random() * 0);
+                    defSkills = (int) (Math.random() * 0);
+                    attSkills = (int) (Math.random() * 100);
+                    break;
+                default:
+                    gkSkills = (int) (Math.random() * 0);
+                    defSkills = (int) (Math.random() * 0);
+                    attSkills = (int) (Math.random() * 0);
+                    break;
+            }
+            int value = (gkSkills * gkSkillsValue + defSkills * defSkillsValue + attSkills * attSkillsValue);
+            int wage = (int) (0.1 * value);
+            playersDb.createPlayer(number, name, position, gkSkills, defSkills, attSkills, wage, value);
+        }
     }
 }

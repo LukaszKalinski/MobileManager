@@ -27,6 +27,8 @@
     <string name="activityResultsCurrentTable">Current Table:</string>
 
     //Team activity
-    <string name="activityTeamPlayers">Players:</string>
+    <string name="activityTeamPlayers">Current Players List:</string>
+    <string name="activityTeamPlayersMarket">Go To Players Market</string>
+    <string name="activityTeamPlayersFoundByScouts">Go To Players Found By Scouts</string>
 
 </resources>
