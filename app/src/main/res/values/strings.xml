@@ -30,5 +30,10 @@
     <string name="activityTeamPlayers">Current Players List:</string>
     <string name="activityTeamPlayersMarket">Go To Players Market</string>
     <string name="activityTeamPlayersFoundByScouts">Go To Players Found By Scouts</string>
+    <string name="activityTeamStyle">Style: </string>
+
+    //Stadium activity
+    <string name="activityStadiumGoToStadium">Go To Stadium</string>
+    <string name="activityStadiumGoToScouting">Go To Scouting</string>
 
 </resources>

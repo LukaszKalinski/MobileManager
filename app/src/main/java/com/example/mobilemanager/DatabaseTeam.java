@@ -108,4 +108,11 @@ public class DatabaseTeam {
         return cursor;
     }
 
+    public Cursor getSpecificGroupOfPlayers(String groupName){
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DATABASE_TABLE +
+                " WHERE " + KEY_POSITION + "=?", new String[] {groupName});
+        cursor.moveToFirst();
+        return cursor;
+    }
+
 }

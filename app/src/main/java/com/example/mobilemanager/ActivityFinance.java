@@ -41,6 +41,18 @@ public class ActivityFinance extends AppCompatActivity {
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+
+        setAccountBalance();
+        setTransferBudget();
+        setWageBudget();
+        getCurrentWageBudget();
+        setMaxPossibleWage();
+        getMaxWage();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main_top_menu, menu);
         return true;

@@ -65,18 +65,6 @@ public class ActivityResults extends AppCompatActivity {
         }
     }
 
-    public void createMatch(int a, int b){
-        teamsDb.open();
-        String homeTeam = teamsDb.getClubName(a);
-        String awayTeam = teamsDb.getClubName(b);
-        resultsDb.open();
-        resultsDb.createMatch("someDay", homeTeam, awayTeam);
-        System.out.println("First match is: " + homeTeam + " - " + awayTeam);
-        System.out.println("Matches in DB are: " + resultsDb.getAllResults().getCount());
-        teamsDb.close();
-        resultsDb.close();
-    }
-
     public void createAllMatches(){
         teamsDb.open();
         int teamsAmount = teamsDb.getAllClubs().getCount();

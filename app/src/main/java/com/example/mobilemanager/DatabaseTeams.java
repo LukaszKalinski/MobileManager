@@ -83,8 +83,8 @@ public class DatabaseTeams {
 
     {
         ContentValues initialValues = new ContentValues();
-        initialValues.put(KEY_LOGIN, userName);
-        initialValues.put(KEY_CLUB_NAME, "Club of " + userName);
+        initialValues.put(KEY_LOGIN, "Player " + userName);
+        initialValues.put(KEY_CLUB_NAME, "Club " + userName);
         initialValues.put(KEY_CLUB_ATTACK_POWER, String.valueOf(attackPower));
         initialValues.put(KEY_CLUB_DEFENCE_POWER, String.valueOf(defencePower));
         return db.insert(DATABASE_TABLE, null, initialValues);
@@ -99,6 +99,7 @@ public class DatabaseTeams {
         Cursor cursor = db.query(DATABASE_TABLE, null, null, null, null, null, null);
         cursor.moveToFirst();
         String myClub = cursor.getString(cursor.getColumnIndex(KEY_CLUB_NAME));
+        cursor.close();
         return myClub;
     }
 
@@ -106,6 +107,7 @@ public class DatabaseTeams {
         Cursor cursor = db.query(DATABASE_TABLE, null, null, null, null, null, null);
         cursor.moveToPosition(id);
         String selectedClub = cursor.getString(cursor.getColumnIndex(KEY_CLUB_NAME));
+        cursor.close();
         return selectedClub;
     }
 
@@ -113,6 +115,7 @@ public class DatabaseTeams {
         Cursor cursor = db.query(DATABASE_TABLE, null, null, null, null, null, null);
         cursor.moveToPosition(id);
         int selectedClub = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_CLUB_ATTACK_POWER)));
+        cursor.close();
         return selectedClub;
     }
 
@@ -120,6 +123,7 @@ public class DatabaseTeams {
         Cursor cursor = db.query(DATABASE_TABLE, null, null, null, null, null, null);
         cursor.moveToPosition(id);
         int selectedClub = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_CLUB_DEFENCE_POWER)));
+        cursor.close();
         return selectedClub;
     }
 
