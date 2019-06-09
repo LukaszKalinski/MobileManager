@@ -116,14 +116,14 @@ public class DatabaseClubFinance {
         Cursor mCursor = db.rawQuery("SELECT * FROM " + DATABASE_TABLE + " WHERE " + KEY_LOGIN + "=?", names);
         mCursor.moveToFirst();
         double accountBalance = Double.valueOf(mCursor.getString(mCursor.getColumnIndex(KEY_BALANCE)));
-        if (balanceIncome > 0){
+        if (balanceIncome != 0){
             newFinance.put(KEY_BALANCE, String.valueOf(accountBalance + balanceIncome));
             newFinance.put(KEY_TRANSFER_BUDGET, String.valueOf(0.8*(accountBalance + balanceIncome)));
             newFinance.put(KEY_WAGE_BUDGET, String.valueOf(0.1*(0.8*(accountBalance + balanceIncome))));
             newFinance.put(KEY_MAX_WAGE, String.valueOf(0.1*(0.8*(accountBalance + balanceIncome))/8));
         }
-        if (currentWageTotal > 0 ){newFinance.put(KEY_CURRENT_WAGE_TOTAL, String.valueOf(currentWageTotal));}
-        if (currentMaxWage > 0 ){newFinance.put(KEY_CURRENT_MAX_WAGE, String.valueOf(currentMaxWage));}
+        if (currentWageTotal != 0 ){newFinance.put(KEY_CURRENT_WAGE_TOTAL, String.valueOf(currentWageTotal));}
+        if (currentMaxWage != 0 ){newFinance.put(KEY_CURRENT_MAX_WAGE, String.valueOf(currentMaxWage));}
 
         db.update(DATABASE_TABLE, newFinance, KEY_LOGIN + "=?", names);
     }

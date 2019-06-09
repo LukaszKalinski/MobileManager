@@ -36,4 +36,22 @@
     <string name="activityStadiumGoToStadium">Go To Stadium</string>
     <string name="activityStadiumGoToScouting">Go To Scouting</string>
 
+    //DetailStadium activity
+    <string name="activityDetailStadiumHeader">Stadium</string>
+    <string name="activityDetailStadiumCurrentLevel">Current Level:</string>
+    <string name="activityDetailStadiumSeatsAmount">Seats:</string>
+    <string name="activityDetailStadiumUpgradeCost">Update Cost (+1):</string>
+    <string name="activityDetailStadiumUpgradeStadium">Upgrade Stadium</string>
+    <string name="activityDetailStadiumTicketPrice">Ticket price:</string>
+    <string name="activityDetailStadiumRaiseTicketPrice">Raise Ticket Price</string>
+
+    //DetailScouting activity
+    <string name="activityDetailScoutingHeader">Scouting</string>
+    <string name="activityDetailScoutingCurrentLevel">Current Level:</string>
+    <string name="activityDetailScoutingUpdateCost">Update Cost (+1):</string>
+    <string name="activityDetailScoutingUpgradeScouting">Upgrade Scouting</string>
+    <string name="activityDetailScoutingFindPlayer">Find Another</string>
+    <string name="activityDetailScoutingUnitaryCost">Unitary Finding Cost:</string>
+    <string name="activityDetailScoutingBuyPlayer">Buy This One!</string>
+
 </resources>

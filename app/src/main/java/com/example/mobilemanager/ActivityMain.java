@@ -18,6 +18,8 @@ public class ActivityMain extends AppCompatActivity {
     DatabaseTeams teamsDb;
     DatabaseResults resultsDb;
     DatabaseTeam playersDb;
+    DatabaseStadium stadiumDb;
+    DatabaseNewFoundPlayer newFoundPlayerDb;
 
     Button getResultsButton;
 
@@ -30,15 +32,19 @@ public class ActivityMain extends AppCompatActivity {
         getResultsButton = (Button) findViewById(R.id.getResultsButton);
 
         clubFinanceDb = new DatabaseClubFinance(this, getLogin());
+        stadiumDb = new DatabaseStadium(this, getLogin());
         teamsDb = new DatabaseTeams(this, getLogin());
         resultsDb = new DatabaseResults(this, getLogin());
         playersDb = new DatabaseTeam(this, getLogin());
+        newFoundPlayerDb = new DatabaseNewFoundPlayer(this, getLogin());
 
         //Checking if Databases exists
         checkIfClubFinanceDbExist();
+        checkIfStadiumExists();
         checkIfPlayersDbExist();
         checkIfTeamsDbExist();
         checkIfResultsDbExist();
+        checkIfNewPlayerFound();
 
         getResultsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -232,5 +238,99 @@ public class ActivityMain extends AppCompatActivity {
             playersDb.createPlayer(number, name, position, gkSkills, defSkills, attSkills, wage, value);
         }
     }
+
+    public void checkIfStadiumExists(){
+        stadiumDb.open();
+        if (stadiumDb.getAllBuildings().getCount() > 0) {
+            Log.d("teamPoint", "DatabaseStadium already EXISTS");
+            Log.d("teamPoint", "and amount of buildings are: " + String.valueOf(stadiumDb.getAllBuildings().getCount()));
+        } else {
+            Log.d("teamPoint", "Creating stadium buildings");
+
+            stadiumDb.createBuilding("Stadium", 1, 10000, 15, 1000, 0);
+            stadiumDb.createBuilding("Scouting", 1, 10000, 1000,0,0);
+
+        }
+        stadiumDb.close();
+    }
+
+    public void checkIfNewPlayerFound(){
+
+        newFoundPlayerDb.open();
+        if (newFoundPlayerDb.getAllPlayers().getCount() > 0) {
+            Log.d("teamPoint", "DatabaseFoundPlayer already EXISTS");
+            Log.d("teamPoint", "and amount of players are: " + String.valueOf(newFoundPlayerDb.getAllPlayers().getCount()));
+        } else {
+            Log.d("teamPoint", "Creating new found player");
+
+            int skillsValue = 100000;
+            String[] firstName = {"Antoni", "Jakub", "Jan", "Szymon", "Aleksander", "Franciszek", "Filip", "Mikolaj", "Wojciech", "Kacper", "Adam", "Marcel", "Stanislaw", "Michal", "Lukasz", "Wiktor", "Leon", "Piotr", "Nikodem", "Igor", "Ignacy", "Sebastian"};
+            String[] lastName = {"Nowak", "Kowalski", "Wisniewski", "Wojcik", "Wojcicki", "Kowalczyk", "Kaminski", "Lewandowski", "Zielinski", "Szymanski" , "Wozniak", "Dabrowski", "Kozlowski", "Jankowski", "Wojciechowski", "Kwiatkowski", "Mazur", "Krawczyk"};
+
+            String name = firstName[(int) (Math.random() * firstName.length)] + " " + lastName[(int) (Math.random() * lastName.length)];
+
+            int gkSkills;
+            int defSkills;
+            int attSkills;
+            int value;
+
+            String position;
+            int a = (int) (Math.random()*4);
+            switch (a){
+                case 0:
+                    position = "Goalkeeper";
+                    break;
+                case 1:
+                    position = "Defender";
+                    break;
+                case 2:
+                    position = "Midfielder";
+                    break;
+                case 3:
+                    position = "Attacker";
+                    break;
+                default:
+                    position = "Goalkeeper";
+                    break;
+            }
+
+            switch (position){
+                    case "Goalkeeper":
+                        gkSkills = (int) (Math.random() * 100);
+                        defSkills = (int) (Math.random() * 10);
+                        attSkills = (int) (Math.random() * 10);
+                        value = (gkSkills * skillsValue * 3 + defSkills * skillsValue + attSkills * skillsValue);
+                        break;
+                    case "Defender":
+                        gkSkills = (int) (Math.random() * 10);
+                        defSkills = (int) (Math.random() * 100);
+                        attSkills = (int) (Math.random() * 100);
+                        value = (gkSkills * skillsValue + defSkills * skillsValue * 3 + attSkills * skillsValue * 1);
+                        break;
+                    case "Midfielder":
+                        gkSkills = (int) (Math.random() * 10);
+                        defSkills = (int) (Math.random() * 100);
+                        attSkills = (int) (Math.random() * 100);
+                        value = (gkSkills * skillsValue + defSkills * skillsValue * 2 + attSkills * skillsValue * 2);
+                        break;
+                    case "Attacker":
+                        gkSkills = (int) (Math.random() * 10);
+                        defSkills = (int) (Math.random() * 100);
+                        attSkills = (int) (Math.random() * 100);
+                        value = (gkSkills * skillsValue * 0 + defSkills * skillsValue + attSkills * skillsValue * 4);
+                        break;
+                    default:
+                        gkSkills = (int) (Math.random() * 10);
+                        defSkills = (int) (Math.random() * 100);
+                        attSkills = (int) (Math.random() * 100);
+                        value = (gkSkills * skillsValue + defSkills * skillsValue + attSkills * skillsValue);
+                        break;
+                }
+
+                int wage = (int) (0.1 * value);
+               newFoundPlayerDb.createPlayer(99, name, position, gkSkills, defSkills, attSkills, wage, value);
+            }
+        newFoundPlayerDb.close();
+        }
 
 }
