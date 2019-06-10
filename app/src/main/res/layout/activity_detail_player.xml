@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/activityDetailPlayerHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="132dp"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="50dp"
+        android:padding="5dp"
+        android:text="@string/activityDetailPlayerName"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/activityDetailPlayerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="50dp"
+        android:padding="5dp"
+        android:text="First and LastName"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/activityDetailPlayerHeader"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/activityDetailPlayerNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="8dp"
+        android:padding="5dp"
+        android:text="10"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/activityDetailPlayerHeader"
+        app:layout_constraintTop_toBottomOf="@+id/activityDetailPlayerName" />
+
+    <TextView
+        android:id="@+id/activityDetailPlayerPosition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="8dp"
+        android:padding="5dp"
+        android:text="Goalkeeper"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/activityDetailPlayerHeader"
+        app:layout_constraintTop_toBottomOf="@+id/activityDetailPlayerNumber" />
+
+    <TextView
+        android:id="@+id/activityDetailPlayerHeader2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="132dp"
+        android:layout_marginLeft="132dp"
+        android:layout_marginTop="8dp"
+        android:padding="5dp"
+        android:text="@string/activityDetailPlayerNumber"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activityDetailPlayerHeader" />
+
+    <TextView
+        android:id="@+id/activityDetailPlayerHeader9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="132dp"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="8dp"
+        android:padding="5dp"
+        android:text="@string/activityDetailPlayerPosition"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activityDetailPlayerHeader2" />
+
+    <TextView
+        android:id="@+id/activityDetailPlayerHeader3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="20dp"
+        android:padding="5dp"
+        android:text="@string/activityDetailPlayerValue"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView11" />
+
+    <TextView
+        android:id="@+id/activityDetailPlayerValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"
+        android:padding="5dp"
+        android:text="1.000.000 $"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/activityDetailPlayerHeader3"
+        app:layout_constraintTop_toBottomOf="@+id/imageView11" />
+
+    <TextView
+        android:id="@+id/activityDetailPlayerWage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="50dp"
+        android:padding="5dp"
+        android:text="100.000 $"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/activityDetailPlayerHeader3"
+        app:layout_constraintTop_toTopOf="@+id/activityDetailPlayerHeader4" />
+
+    <TextView
+        android:id="@+id/activityDetailPlayerGkSkills"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:padding="5dp"
+        android:text="0"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/activityDetailPlayerHeader3"
+        app:layout_constraintTop_toTopOf="@+id/activityDetailPlayerHeader5" />
+
+    <TextView
+        android:id="@+id/activityDetailPlayerDefSkills"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:padding="5dp"
+        android:text="0"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/activityDetailPlayerHeader3"
+        app:layout_constraintTop_toTopOf="@+id/activityDetailPlayerHeader6" />
+
+    <TextView
+        android:id="@+id/activityDetailPlayerAttSkills"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:padding="5dp"
+        android:text="0"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/activityDetailPlayerHeader3"
+        app:layout_constraintTop_toTopOf="@+id/activityDetailPlayerHeader7" />
+
+    <TextView
+        android:id="@+id/activityDetailPlayerHeader4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:padding="5dp"
+        android:text="@string/activityDetailPlayerWage"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activityDetailPlayerHeader3" />
+
+    <TextView
+        android:id="@+id/activityDetailPlayerHeader5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:padding="5dp"
+        android:text="@string/activityDetailPlayerGkSkills"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activityDetailPlayerHeader4" />
+
+    <TextView
+        android:id="@+id/activityDetailPlayerHeader6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:padding="5dp"
+        android:text="@string/activityDetailPlayerDefSkills"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activityDetailPlayerHeader5" />
+
+    <TextView
+        android:id="@+id/activityDetailPlayerHeader7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:padding="5dp"
+        android:text="@string/activityDetailPlayerAttSkills"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activityDetailPlayerHeader6" />
+
+    <ImageView
+        android:id="@+id/activityResultImageView2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@color/colorPrimary"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activityResultImageView2"
+        app:srcCompat="@drawable/team" />
+
+    <Button
+        android:id="@+id/activityDetailPlayerSellBtn"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/activityDetailPlayerSellPlayer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activityDetailPlayerHeader7" />
+</android.support.constraint.ConstraintLayout>

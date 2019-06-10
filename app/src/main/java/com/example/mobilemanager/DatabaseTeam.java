@@ -108,11 +108,25 @@ public class DatabaseTeam {
         return cursor;
     }
 
-    public Cursor getSpecificGroupOfPlayers(String groupName){
-        Cursor cursor = db.rawQuery("SELECT * FROM " + DATABASE_TABLE +
-                " WHERE " + KEY_POSITION + "=?", new String[] {groupName});
+    public int getTotalPlayersWages(){
+        Cursor cursor = db.query(DATABASE_TABLE, null, null, null, null, null, null);
         cursor.moveToFirst();
-        return cursor;
+        int wageTotal = 0;
+        while(cursor.moveToNext()){
+            wageTotal = wageTotal + Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_CONTRACT_WAGE)));
+        }
+        return wageTotal;
     }
 
+    public int getCurrentMaxPlayerWage(){
+        Cursor cursor = db.query(DATABASE_TABLE, null, null, null, null, null, null);
+        cursor.moveToFirst();
+        int wageMax = 0;
+        while(cursor.moveToNext()){
+            if (wageMax < Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_CONTRACT_WAGE)))) {
+                wageMax = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_CONTRACT_WAGE)));
+            }
+        }
+        return wageMax;
+    }
 }

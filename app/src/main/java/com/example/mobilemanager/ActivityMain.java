@@ -188,7 +188,7 @@ public class ActivityMain extends AppCompatActivity {
 
     public void createPlayer(int number, int nextNumber, String position, int startNumber, int end){
 
-        int skillsValue = 100000;
+        int skillsValue = 10000;
         String[] firstName = {"Antoni", "Jakub", "Jan", "Szymon", "Aleksander", "Franciszek", "Filip", "Mikolaj", "Wojciech", "Kacper", "Adam", "Marcel", "Stanislaw", "Michal", "Lukasz", "Wiktor", "Leon", "Piotr", "Nikodem", "Igor", "Ignacy", "Sebastian"};
         String[] lastName = {"Nowak", "Kowalski", "Wisniewski", "Wojcik", "Wojcicki", "Kowalczyk", "Kaminski", "Lewandowski", "Zielinski", "Szymanski" , "Wozniak", "Dabrowski", "Kozlowski", "Jankowski", "Wojciechowski", "Kwiatkowski", "Mazur", "Krawczyk"};
 
@@ -234,7 +234,7 @@ public class ActivityMain extends AppCompatActivity {
                     break;
             }
 
-            int wage = (int) (0.1 * value);
+            int wage = (int) (0.01 * value);
             playersDb.createPlayer(number, name, position, gkSkills, defSkills, attSkills, wage, value);
         }
     }

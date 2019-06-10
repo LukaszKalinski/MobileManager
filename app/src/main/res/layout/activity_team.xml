@@ -28,7 +28,6 @@
         app:layout_constraintTop_toTopOf="@+id/activityTeamImageView" />
 
 
-
     <TextView
         android:id="@+id/activityTeamStyle"
         android:layout_width="wrap_content"
@@ -52,27 +51,30 @@
         app:layout_constraintStart_toEndOf="@+id/activityTeamStyle"
         app:layout_constraintTop_toTopOf="@+id/activityTeamStyle" />
 
-        <TextView
-            android:id="@+id/activityTeamPower"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:padding="5dp"
-            android:text="Teampowers"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/activityTeamStyle" />
+    <TextView
+        android:id="@+id/activityTeamPower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="5dp"
+        android:text="Teampowers"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activityTeamStyle" />
 
     <ListView
         android:id="@+id/activityTeamListView"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/playersFoundedByScouts"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activityTeamPower" />
 
     <Button
@@ -87,17 +89,17 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/playersMarket"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:background="@color/colorPrimary"
-            android:text="@string/activityTeamPlayersMarket"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+    <Button
+        android:id="@+id/playersMarket"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/activityTeamPlayersMarket"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
 

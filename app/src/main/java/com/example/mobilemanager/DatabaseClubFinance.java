@@ -90,7 +90,7 @@ public class DatabaseClubFinance {
 
     {
         ContentValues initialValues = new ContentValues();
-        double accountBalance = 1000000;
+        double accountBalance = 5000000;
         double transferBudget = 0.8 * accountBalance;
         double wageBudget = 0.1*(0.8*accountBalance);
         double maxPossWage = 0.1*(0.8*accountBalance)/8;
@@ -152,28 +152,12 @@ public class DatabaseClubFinance {
         return wageBudget;
     }
 
-    public double getCurrentWages(String name) throws SQLException {
-        String[] names = new String[] {name};
-        Cursor mCursor = db.rawQuery("SELECT * FROM " + DATABASE_TABLE + " WHERE " + KEY_LOGIN + "=?", names);
-        mCursor.moveToFirst();
-        double currentWages = Double.valueOf(mCursor.getString(mCursor.getColumnIndex(KEY_CURRENT_WAGE_TOTAL)));
-        return currentWages;
-    }
-
     public double getMaxPossWage(String name) throws SQLException {
         String[] names = new String[] {name};
         Cursor mCursor = db.rawQuery("SELECT * FROM " + DATABASE_TABLE + " WHERE " + KEY_LOGIN + "=?", names);
         mCursor.moveToFirst();
         double maxPossWage = Double.valueOf(mCursor.getString(mCursor.getColumnIndex(KEY_MAX_WAGE)));
         return maxPossWage;
-    }
-
-    public double getCurrentMaxWage(String name) throws SQLException {
-        String[] names = new String[] {name};
-        Cursor mCursor = db.rawQuery("SELECT * FROM " + DATABASE_TABLE + " WHERE " + KEY_LOGIN + "=?", names);
-        mCursor.moveToFirst();
-        double currentMaxWage = Double.valueOf(mCursor.getString(mCursor.getColumnIndex(KEY_CURRENT_MAX_WAGE)));
-        return currentMaxWage;
     }
 
 }

@@ -195,6 +195,14 @@ public class ActivityTeam extends AppCompatActivity {
             }
         });
 
+        activityTeamListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String listViewPosition = String.valueOf(position);
+                sendingListViewPosition(listViewPosition);
+            }
+        });
+
     }
 
     @Override
@@ -404,6 +412,12 @@ public class ActivityTeam extends AppCompatActivity {
     public int calculateAttPower(int gkSkillsTotal, int defSkillsTotal, int midSkillsTotal, int attSkillsTotal){
         int attPower = 4 * attSkillsTotal + 2 * midSkillsTotal + defSkillsTotal + gkSkillsTotal;
         return attPower;
+    }
+
+    public void sendingListViewPosition(String position){
+        Intent i = new Intent(this, ActivityDetailPlayer.class);
+        i.putExtra("sendingPosition", position);
+        startActivity(i);
     }
 
 }

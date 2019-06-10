@@ -146,8 +146,9 @@ public class ActivityDetailScouting extends AppCompatActivity {
         if (balance >= charge){
             Player player = getPlayer(0);
             teamDb.open();
-
-            teamDb.createPlayer(99, player.getName(), player.getPosition(), player.getGkSkills(),
+            Cursor cursor = teamDb.getAllPlayers();
+            cursor.moveToLast();
+            teamDb.createPlayer(Integer.parseInt(cursor.getString(1)) + 1, player.getName(), player.getPosition(), player.getGkSkills(),
                     player.getDefSkills(), player.getAttSkills(), (int) player.getWage(), (int) player.getValue());
             teamDb.close();
             Toast.makeText(this, "Bought player", Toast.LENGTH_LONG).show();
@@ -163,6 +164,7 @@ public class ActivityDetailScouting extends AppCompatActivity {
         financeDb.open();
         int balance = (int) financeDb.getAccountBalance(getLogin());
         int charge = getScoutingInfo().getFirstValue();
+        int currentLevel = getScoutingInfo().getLevel();
 
         if (balance >= charge){
             newFoundPlayerDb.open();
@@ -199,33 +201,33 @@ public class ActivityDetailScouting extends AppCompatActivity {
 
             switch (position){
                 case "Goalkeeper":
-                    gkSkills = (int) (Math.random() * 100);
+                    gkSkills = (int) (Math.max(Math.random() * 100, currentLevel * 10));
                     defSkills = (int) (Math.random() * 10);
                     attSkills = (int) (Math.random() * 10);
                     value = (gkSkills * skillsValue * 3 + defSkills * skillsValue + attSkills * skillsValue);
                     break;
                 case "Defender":
                     gkSkills = (int) (Math.random() * 10);
-                    defSkills = (int) (Math.random() * 100);
-                    attSkills = (int) (Math.random() * 100);
-                    value = (gkSkills * skillsValue + defSkills * skillsValue * 3 + attSkills * skillsValue * 1);
+                    defSkills = (int) (Math.max(Math.random() * 100, currentLevel * 10));
+                    attSkills = (int) (Math.max(Math.random() * 100, currentLevel * 10));
+                    value = (gkSkills * skillsValue + defSkills * skillsValue * 3 + attSkills * skillsValue);
                     break;
                 case "Midfielder":
                     gkSkills = (int) (Math.random() * 10);
-                    defSkills = (int) (Math.random() * 100);
-                    attSkills = (int) (Math.random() * 100);
+                    defSkills = (int) (Math.max(Math.random() * 100, currentLevel * 10));
+                    attSkills = (int) (Math.max(Math.random() * 100, currentLevel * 10));
                     value = (gkSkills * skillsValue + defSkills * skillsValue * 2 + attSkills * skillsValue * 2);
                     break;
                 case "Attacker":
                     gkSkills = (int) (Math.random() * 10);
-                    defSkills = (int) (Math.random() * 100);
-                    attSkills = (int) (Math.random() * 100);
+                    defSkills = (int) (Math.max(Math.random() * 100, currentLevel * 10));
+                    attSkills = (int) (Math.max(Math.random() * 100, currentLevel * 10));
                     value = (gkSkills * skillsValue * 0 + defSkills * skillsValue + attSkills * skillsValue * 4);
                     break;
                 default:
                     gkSkills = (int) (Math.random() * 10);
-                    defSkills = (int) (Math.random() * 100);
-                    attSkills = (int) (Math.random() * 100);
+                    defSkills = (int) (Math.max(Math.random() * 100, currentLevel * 10));
+                    attSkills = (int) (Math.max(Math.random() * 100, currentLevel * 10));
                     value = (gkSkills * skillsValue + defSkills * skillsValue + attSkills * skillsValue);
                     break;
             }

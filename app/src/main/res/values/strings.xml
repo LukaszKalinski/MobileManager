@@ -54,4 +54,15 @@
     <string name="activityDetailScoutingUnitaryCost">Unitary Finding Cost:</string>
     <string name="activityDetailScoutingBuyPlayer">Buy This One!</string>
 
+    //DetailPlayer
+    <string name="activityDetailPlayerName">Name:</string>
+    <string name="activityDetailPlayerNumber">Number:</string>
+    <string name="activityDetailPlayerPosition">Position:</string>
+    <string name="activityDetailPlayerValue">Value:</string>
+    <string name="activityDetailPlayerWage">Wage:</string>
+    <string name="activityDetailPlayerGkSkills">GK Skills:</string>
+    <string name="activityDetailPlayerDefSkills">Def Skills:</string>
+    <string name="activityDetailPlayerAttSkills">Att Skills:</string>
+    <string name="activityDetailPlayerSellPlayer">Sell Player</string>
+
 </resources>

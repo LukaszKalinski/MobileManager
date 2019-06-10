@@ -12,6 +12,7 @@ public class ActivityFinance extends AppCompatActivity {
 
     String loggedUserName;
     DatabaseClubFinance clubFinanceDb;
+    DatabaseTeam playersDb;
     TextView activityFinanceAccountBalance;
     TextView activityFinanceTransferBudget;
     TextView activityFinanceWageBudget;
@@ -25,6 +26,8 @@ public class ActivityFinance extends AppCompatActivity {
         setContentView(R.layout.activity_finance);
 
         clubFinanceDb = new DatabaseClubFinance(this, getLogin());
+        playersDb = new DatabaseTeam(this, getLogin());
+
         activityFinanceAccountBalance = (TextView) findViewById(R.id.activityFinanceAccountBalance);
         setAccountBalance();
         activityFinanceTransferBudget = (TextView) findViewById(R.id.activityFinanceTransferBudget);
@@ -32,7 +35,7 @@ public class ActivityFinance extends AppCompatActivity {
         activityFinanceWageBudget = (TextView) findViewById(R.id.activityFinanceWageBudget);
         setWageBudget();
         activityFinanceCurrentWage = (TextView) findViewById(R.id.activityFinanceCurrentWage);
-        getCurrentWageBudget();
+        getCurrentWage();
         activityFinanceMaxWage = (TextView) findViewById(R.id.activityFinanceMaxWage);
         setMaxPossibleWage();
         activityFinanceCurrentMaxWage = (TextView) findViewById(R.id.activityFinanceCurrentMaxWage);
@@ -47,7 +50,7 @@ public class ActivityFinance extends AppCompatActivity {
         setAccountBalance();
         setTransferBudget();
         setWageBudget();
-        getCurrentWageBudget();
+        getCurrentWage();
         setMaxPossibleWage();
         getMaxWage();
     }
@@ -182,14 +185,14 @@ public class ActivityFinance extends AppCompatActivity {
         clubFinanceDb.close();
     }
 
-    public void getCurrentWageBudget(){
-        clubFinanceDb.open();
-        Double currentWage = Double.valueOf(clubFinanceDb.getCurrentWages(getLogin()));
+    public void getCurrentWage(){
+        playersDb.open();
+        int currentWage = playersDb.getTotalPlayersWages();
         java.text.DecimalFormat df = new java.text.DecimalFormat();
         df.setMaximumFractionDigits(3);
         df.setMinimumFractionDigits(3);
         activityFinanceCurrentWage.setText(String.valueOf("$ " + df.format(currentWage/1000) + " k per week"));
-        clubFinanceDb.close();
+        playersDb.close();
     }
 
     public void setMaxPossibleWage(){
@@ -203,12 +206,13 @@ public class ActivityFinance extends AppCompatActivity {
     }
 
     public void getMaxWage(){
-        clubFinanceDb.open();
-        Double currentMaxWage = Double.valueOf(clubFinanceDb.getCurrentMaxWage(getLogin()));
+        playersDb.open();
+        int currentMaxWage = playersDb.getCurrentMaxPlayerWage();
         java.text.DecimalFormat df = new java.text.DecimalFormat();
         df.setMaximumFractionDigits(3);
         df.setMinimumFractionDigits(3);
         activityFinanceCurrentMaxWage.setText(String.valueOf("$ " + df.format(currentMaxWage/1000) + " k per week"));
-        clubFinanceDb.close();
+        playersDb.close();
     }
+
 }
