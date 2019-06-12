@@ -28,8 +28,9 @@ public class ActivityResults extends AppCompatActivity {
         teamsDb = new DatabaseTeams(this, getLogin());
         activityResultsTable = (ListView) findViewById(R.id.activityResultsTable);
 
-        checkIfResultsDbExist();
+        playAllMatches();
         fastLogTableCheck();
+
 
         refreshScoreTable();
 
@@ -49,20 +50,6 @@ public class ActivityResults extends AppCompatActivity {
         loggedUserName = sp1.getString("Username", null);
         Toast.makeText(this,"LOGIN" + loggedUserName, Toast.LENGTH_LONG).show();
         return loggedUserName;
-    }
-
-    public void checkIfResultsDbExist(){
-        resultsDb.open();
-        if (resultsDb.getAllResults().getCount() > 0){
-            Log.d("teamPoint", "DatabaseResults already EXISTS");
-            Log.d("teamPoint", "and amount of matches are: " + String.valueOf(resultsDb.getAllResults().getCount()));
-            resultsDb.close();
-        } else {
-            resultsDb.close();
-            Log.d("teamPoint", "Creating and playing matches");
-            createAllMatches();
-            playAllMatches();
-        }
     }
 
     public void createAllMatches(){
@@ -239,18 +226,23 @@ public class ActivityResults extends AppCompatActivity {
     }
 
     public void setRoundsToMatches(){
-//        teamsDb.open();
-//        resultsDb.open();
+        teamsDb.open();
+        resultsDb.open();
+
+
+//        for (int a = 1; a <= 30; a ++){
+//            for (int b = 1; b <= 8; b ++){
+//                Cursor cursor = resultsDb.getAllResults();
+//                cursor.moveToFirst();
+//                while(){resultsDb.setRoundOfMatch(String.valueOf(a), homeTeam, awayTeam);}
 //
 //
 //
-//
-//
-//        Cursor mCursor = resultsDb.getRoundMatches(112,0);
-//        int x = Integer.parseInt(mCursor.getString(1));
-//        Log.d("teamPoint", "getRoundMatch (0,1) is:" + x);
-//        resultsDb.close();
-//        teamsDb.close();
+//            }
+//        }
+
+        resultsDb.close();
+        teamsDb.close();
     }
 
 

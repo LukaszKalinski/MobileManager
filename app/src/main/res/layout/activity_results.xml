@@ -29,7 +29,7 @@
 
     <ListView
         android:id="@+id/activityResultsTable"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"

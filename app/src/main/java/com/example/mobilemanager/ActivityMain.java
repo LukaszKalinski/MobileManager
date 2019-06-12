@@ -152,10 +152,11 @@ public class ActivityMain extends AppCompatActivity {
         if (resultsDb.getAllResults().getCount() > 0) {
             System.out.println("DatabaseResults already EXISTS");
             System.out.println("and amount of matches are: " + String.valueOf(resultsDb.getAllResults().getCount()));
+            resultsDb.close();
         } else {
-            System.out.println("Need to create first match later");
+            System.out.println("Created all matches");
+            createAllMatches();
         }
-        resultsDb.close();
     }
 
     public void earnedMoney(double incomes) {
@@ -332,5 +333,26 @@ public class ActivityMain extends AppCompatActivity {
             }
         newFoundPlayerDb.close();
         }
+
+    public void createAllMatches(){
+        teamsDb.open();
+        int teamsAmount = teamsDb.getAllClubs().getCount();
+        resultsDb.open();
+        int x1;
+        int x2;
+        for (x1 = 0; x1 < teamsAmount; x1++){
+            for (x2 = 0; x2 < teamsAmount; x2++){
+                if (x1 != x2){
+                    String homeTeam = teamsDb.getClubName(x1);
+                    String awayTeam = teamsDb.getClubName(x2);
+                    resultsDb.createMatch("0", homeTeam, awayTeam);
+//                    System.out.println("Created Match: " + homeTeam + " - " + awayTeam);
+                }
+            }
+        }
+        teamsDb.close();
+        resultsDb.close();
+
+    }
 
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/playerRow"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -19,13 +18,13 @@
 
     <TextView
         android:id="@+id/listViewPlayersName"
-        android:layout_width="180dp"
+        android:layout_width="140dp"
         android:layout_height="30dp"
         android:gravity="center_vertical"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:text="Name"
-        android:textSize="15dp" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/listViewPlayersPosition"
@@ -35,7 +34,7 @@
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:text="Position"
-        android:textSize="15dp" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/listViewPlayersGkSkills"
@@ -49,7 +48,7 @@
 
     <TextView
         android:id="@+id/listViewPlayersDefSkills"
-        android:layout_width="wrap_content"
+        android:layout_width="30dp"
         android:layout_height="30dp"
         android:gravity="center_vertical"
         android:paddingLeft="5dp"

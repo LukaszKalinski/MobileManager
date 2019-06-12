@@ -2,8 +2,10 @@ package com.example.mobilemanager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -16,22 +18,83 @@ public class ActivityCalendar extends AppCompatActivity {
     Button activityCalendarLastResult1;
     Button activityCalendarLastResult2;
     Button activityCalendarLastResult3;
+    DatabaseResults resultsDb;
+    DatabaseTeams teamsDb;
+    String lastMatch1;
+    String lastMatch2;
+    String lastMatch3;
+    String nextMatch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
+        resultsDb = new DatabaseResults(this, getLogin());
+        teamsDb = new DatabaseTeams(this, getLogin());
+
+        teamsDb.open();
+        resultsDb.open();
+        Log.d("teamPoint", teamsDb.getClubName(0));
+
+        Cursor lastMatchCursor = resultsDb.getPlayedMatchesOfTeam(teamsDb.getClubName(0));
+        Cursor nextMatchCursor = resultsDb.getScheduledMatchesOfTeam(teamsDb.getClubName(0));
+
+        if (lastMatchCursor.getCount() > 0){
+            lastMatchCursor.moveToLast();
+            lastMatch1 = "[" + lastMatchCursor.getString(2) + "] "
+                    + lastMatchCursor.getString(4) + " - "
+                    + lastMatchCursor.getString(5) + " ["
+                    + lastMatchCursor.getString(3) + "]";
+        } else {
+            lastMatch1 = "Not played";
+        }
+        if (lastMatchCursor.moveToPosition(lastMatchCursor.getPosition()-1)){
+            lastMatch2 = "[" + lastMatchCursor.getString(2) + "] "
+                    + lastMatchCursor.getString(4) + " - "
+                    + lastMatchCursor.getString(5) + " ["
+                    + lastMatchCursor.getString(3) + "]";
+        } else {
+            lastMatch2 = "Not played";
+        }
+
+        if (lastMatchCursor.moveToPosition(lastMatchCursor.getPosition()-1)){
+            lastMatch3 = "[" + lastMatchCursor.getString(2) + "] "
+                    + lastMatchCursor.getString(4) + " - "
+                    + lastMatchCursor.getString(5) + " ["
+                    + lastMatchCursor.getString(3) + "]";
+        } else {
+            lastMatch3 = "Not played";
+        }
+
+        nextMatch = "Not Arranged Yet";
+        nextMatchCursor.moveToFirst();
+        if (nextMatchCursor.getString(6).equals("no") ) {
+            nextMatch = "[" + nextMatchCursor.getString(2) + "] "
+                    + nextMatchCursor.getString(4) + " - "
+                    + nextMatchCursor.getString(5) + " ["
+                    + nextMatchCursor.getString(3) + "]"
+            ;
+        } else {
+            nextMatch = "No more games";
+        }
+
+        lastMatchCursor.close();
+        nextMatchCursor.close();
+
+        resultsDb.close();
+        teamsDb.close();
+
         activityCalendarLastMatchBtn = (Button) findViewById(R.id.activityCalendarLastMatchBtn);
-        activityCalendarLastMatchBtn.setText("home 0 - 0 away");
+        activityCalendarLastMatchBtn.setText(lastMatch1);
         activityCalendarNextMatchBtn = (Button) findViewById(R.id.activityCalendarNextMatchBtn);
-        activityCalendarNextMatchBtn.setText("home    -    away");
+        activityCalendarNextMatchBtn.setText(nextMatch);
         activityCalendarLastResult1 = (Button) findViewById(R.id.activityCalendarLastResult1);
-        activityCalendarLastResult1.setText("home 1 - 0 away");
+        activityCalendarLastResult1.setText(lastMatch3);
         activityCalendarLastResult2 = (Button) findViewById(R.id.activityCalendarLastResult2);
-        activityCalendarLastResult2.setText("home 1 - 2 away");
+        activityCalendarLastResult2.setText(lastMatch2);
         activityCalendarLastResult3 = (Button) findViewById(R.id.activityCalendarLastResult3);
-        activityCalendarLastResult3.setText("home 3 - 0 away");
+        activityCalendarLastResult3.setText(lastMatch1);
 
     }
 

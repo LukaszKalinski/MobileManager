@@ -236,10 +236,30 @@ public class DatabaseResults {
                         + KEY_AWAY_TEAM + " =?", new String[] {homeTeam, awayTeam});
     }
 
-    public Cursor getRoundMatches(int round, int match){
+    public Cursor getRoundMatches(int round){
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DATABASE_TABLE +
+                " WHERE " + KEY_DATE + "=?" , new String[] {String.valueOf(round)});
+        return cursor;
+    }
+
+    public Cursor getRoundOneMatch(int round, int match){
         Cursor cursor = db.rawQuery("SELECT * FROM " + DATABASE_TABLE +
                 " WHERE " + KEY_DATE + "=?" , new String[] {String.valueOf(round)});
         cursor.moveToPosition(match);
+        return cursor;
+    }
+
+    public Cursor getPlayedMatchesOfTeam(String name){
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DATABASE_TABLE +
+                " WHERE (" + KEY_HOME_TEAM+ "=? OR " + KEY_AWAY_TEAM + " =?) AND " + KEY_IS_PLAYED + " =?" , new String[] {String.valueOf(name), String.valueOf(name), "yes"});
+        cursor.moveToFirst();
+        return cursor;
+    }
+
+    public Cursor getScheduledMatchesOfTeam(String name){
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DATABASE_TABLE +
+                " WHERE (" + KEY_HOME_TEAM+ "=? OR " + KEY_AWAY_TEAM + " =?) AND " + KEY_IS_PLAYED + " =?" , new String[] {String.valueOf(name), String.valueOf(name), "no"});
+        cursor.moveToFirst();
         return cursor;
     }
 }
