@@ -69,4 +69,9 @@
     <string name="activityDetailPlayerSellPlayer">Sell Player</string>
     <string name="activityDetailPlayerCloseBtn">Close</string>
 
+    //DetailResults
+    <string name="activityLastRoundSeeTable">See TableScore</string>
+    <string name="activityLastRoundClose">Close</string>
+
+
 </resources>

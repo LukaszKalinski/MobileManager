@@ -25,6 +25,7 @@ public class ActivityMain extends AppCompatActivity {
     DatabaseNewFoundPlayer newFoundPlayerDb;
     Button activityMainPlayNextRound;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +53,11 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 playNextRoundMatches();
+                Intent intent = new Intent(ActivityMain.this, ActivityDetailLastRound.class);
+                startActivity(intent);
             }
         });
+
     }
 
     @Override
