@@ -129,7 +129,6 @@ public class ActivityDetailStadium extends AppCompatActivity {
     public String getLogin() {
         SharedPreferences sp1 = this.getSharedPreferences("Login", MODE_PRIVATE);
         loggedUserName = sp1.getString("Username", null);
-        Toast.makeText(this, "LOGIN" + loggedUserName, Toast.LENGTH_LONG).show();
         return loggedUserName;
     }
 
