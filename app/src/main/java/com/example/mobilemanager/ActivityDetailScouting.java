@@ -1,9 +1,12 @@
 package com.example.mobilemanager;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -81,6 +84,55 @@ public class ActivityDetailScouting extends AppCompatActivity {
         super.onResume();
         setTextViews();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main_top_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        switch(item.getItemId()) {
+            case R.id.msg:
+                intent = new Intent(this, ActivityMessages.class);
+                startActivity(intent);
+                return(true);
+            case R.id.team:
+                intent = new Intent(this, ActivityTeam.class);
+                startActivity(intent);
+                return(true);
+            case R.id.results:
+                intent = new Intent(this, ActivityResults.class);
+                startActivity(intent);
+                return(true);
+            case R.id.calendar:
+                intent = new Intent(this, ActivityCalendar.class);
+                startActivity(intent);
+                return(true);
+            case R.id.stadium:
+                intent = new Intent(this, ActivityStadium.class);
+                startActivity(intent);
+                return(true);
+            case R.id.finance:
+                intent = new Intent(this, ActivityFinance.class);
+                startActivity(intent);
+                return(true);
+            case R.id.mainPage:
+                intent = new Intent(this, ActivityMain.class);
+                startActivity(intent);
+                return(true);
+            case R.id.profile:
+                intent = new Intent(this, Profile.class);
+                startActivity(intent);
+                return(true);
+            case R.id.exit:
+                finish();
+                return(true);
+        }
+        return(super.onOptionsItemSelected(item));
     }
 
     public String getLogin() {
@@ -168,16 +220,16 @@ public class ActivityDetailScouting extends AppCompatActivity {
 
         if (balance >= charge){
             newFoundPlayerDb.open();
-            int skillsValue = 100000;
-            String[] firstName = {"Antoni", "Jakub", "Jan", "Szymon", "Aleksander", "Franciszek", "Filip", "Mikolaj", "Wojciech", "Kacper", "Adam", "Marcel", "Stanislaw", "Michal", "Lukasz", "Wiktor", "Leon", "Piotr", "Nikodem", "Igor", "Ignacy", "Sebastian"};
-            String[] lastName = {"Nowak", "Kowalski", "Wisniewski", "Wojcik", "Wojcicki", "Kowalczyk", "Kaminski", "Lewandowski", "Zielinski", "Szymanski" , "Wozniak", "Dabrowski", "Kozlowski", "Jankowski", "Wojciechowski", "Kwiatkowski", "Mazur", "Krawczyk"};
-
-            String name = firstName[(int) (Math.random() * firstName.length)] + " " + lastName[(int) (Math.random() * lastName.length)];
-
+            int value;
+            int skillsValue = 1000;
             int gkSkills;
             int defSkills;
             int attSkills;
-            int value;
+            int factor;
+            String[] firstName = {"Antoni", "Jakub", "Jan", "Szymon", "Aleksander", "Franciszek", "Filip", "Mikolaj", "Wojciech", "Kacper", "Adam", "Marcel", "Stanislaw", "Michal", "Lukasz", "Wiktor", "Leon", "Piotr", "Nikodem", "Igor", "Ignacy", "Sebastian"};
+            String[] lastName = {"Nowak", "Kowalski", "Wisniewski", "Wojcik", "Wojcicki", "Kowalczyk", "Kaminski", "Lewandowski", "Zielinski", "Szymanski", "Wozniak", "Dabrowski", "Kozlowski", "Jankowski", "Wojciechowski", "Kwiatkowski", "Mazur", "Krawczyk"};
+
+            String name = firstName[(int) (Math.random() * firstName.length)] + " " + lastName[(int) (Math.random() * lastName.length)];
 
             String position;
             int a = (int) (Math.random()*4);
@@ -199,40 +251,45 @@ public class ActivityDetailScouting extends AppCompatActivity {
                     break;
             }
 
-            switch (position){
+            switch (position) {
                 case "Goalkeeper":
-                    gkSkills = (int) (Math.max(Math.random() * 100, currentLevel * 10));
+                    gkSkills = (int) (Math.random() * 100);
                     defSkills = (int) (Math.random() * 10);
                     attSkills = (int) (Math.random() * 10);
-                    value = (gkSkills * skillsValue * 3 + defSkills * skillsValue + attSkills * skillsValue);
+                    factor = (int) Math.pow(2, (int) (gkSkills / 10));
+                    value = (int) (Math.max(1000, gkSkills * skillsValue * factor));
                     break;
                 case "Defender":
                     gkSkills = (int) (Math.random() * 10);
-                    defSkills = (int) (Math.max(Math.random() * 100, currentLevel * 10));
-                    attSkills = (int) (Math.max(Math.random() * 100, currentLevel * 10));
-                    value = (gkSkills * skillsValue + defSkills * skillsValue * 3 + attSkills * skillsValue);
+                    defSkills = (int) (Math.random() * 100);
+                    attSkills = (int) (Math.random() * 100);
+                    factor = (int) Math.pow(2, (int) (defSkills / 10));
+                    value = (int) (Math.max(1000, defSkills * skillsValue * factor + attSkills * skillsValue));
                     break;
                 case "Midfielder":
                     gkSkills = (int) (Math.random() * 10);
-                    defSkills = (int) (Math.max(Math.random() * 100, currentLevel * 10));
-                    attSkills = (int) (Math.max(Math.random() * 100, currentLevel * 10));
-                    value = (gkSkills * skillsValue + defSkills * skillsValue * 2 + attSkills * skillsValue * 2);
+                    defSkills = (int) (Math.random() * 100);
+                    attSkills = (int) (Math.random() * 100);
+                    factor = (int) Math.pow(2, (int) ((defSkills + attSkills) / 20));
+                    value = (int) (Math.max(1000, defSkills * skillsValue * factor + attSkills * skillsValue * factor));
                     break;
                 case "Attacker":
                     gkSkills = (int) (Math.random() * 10);
-                    defSkills = (int) (Math.max(Math.random() * 100, currentLevel * 10));
-                    attSkills = (int) (Math.max(Math.random() * 100, currentLevel * 10));
-                    value = (gkSkills * skillsValue * 0 + defSkills * skillsValue + attSkills * skillsValue * 4);
+                    defSkills = (int) (Math.random() * 100);
+                    attSkills = (int) (Math.random() * 100);
+                    factor = (int) Math.pow(2, (int) (attSkills / 10));
+                    value = (int) (Math.max(1000, attSkills * skillsValue * factor + skillsValue * defSkills));
                     break;
                 default:
                     gkSkills = (int) (Math.random() * 10);
-                    defSkills = (int) (Math.max(Math.random() * 100, currentLevel * 10));
-                    attSkills = (int) (Math.max(Math.random() * 100, currentLevel * 10));
-                    value = (gkSkills * skillsValue + defSkills * skillsValue + attSkills * skillsValue);
+                    defSkills = (int) (Math.random() * 100);
+                    attSkills = (int) (Math.random() * 100);
+                    factor = (int) Math.pow(2, (int) (gkSkills / 10));
+                    value = (int) (Math.max(1000, gkSkills * skillsValue * factor));
                     break;
             }
 
-            int wage = (int) (0.1 * value);
+            int wage = (int) (value * 0.1 / 51);
             newFoundPlayerDb.findNextPlayer(name, position, gkSkills, defSkills, attSkills, wage, value);
             newFoundPlayerDb.close();
             charge = charge * (-1);

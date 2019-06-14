@@ -113,4 +113,10 @@ private static class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+        public long setNewTicketPrice(int ticketPrice){
+            ContentValues initialValues = new ContentValues();
+            initialValues.put(KEY_FIRST_VALUE, String.valueOf(ticketPrice));
+            return db.update(DATABASE_TABLE, initialValues, KEY_NAME + "=?", new String[] {"Stadium"});
+        }
+
 }

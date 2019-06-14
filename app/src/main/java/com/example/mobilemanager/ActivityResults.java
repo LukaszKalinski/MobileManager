@@ -1,9 +1,13 @@
 package com.example.mobilemanager;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -17,6 +21,8 @@ public class ActivityResults extends AppCompatActivity {
     ListView activityResultsTable;
     DatabaseResults resultsDb;
     DatabaseTeams teamsDb;
+    DatabaseStadium stadiumDb;
+    DatabaseClubFinance clubFinanceDb;
     public static ArrayList<TeamTableScores> teamTableScores = new ArrayList<>();
 
     @Override
@@ -26,16 +32,12 @@ public class ActivityResults extends AppCompatActivity {
 
         resultsDb = new DatabaseResults(this, getLogin());
         teamsDb = new DatabaseTeams(this, getLogin());
+        stadiumDb = new DatabaseStadium(this, getLogin());
+        clubFinanceDb = new DatabaseClubFinance(this, getLogin());
         activityResultsTable = (ListView) findViewById(R.id.activityResultsTable);
 
-        playAllMatches();
         fastLogTableCheck();
-
-
         refreshScoreTable();
-
-        Log.d("teamPoint", getSingleResult(0,1));
-        Log.d("teamPoint", getSingleResult(0,2));
 
     }
 
@@ -44,6 +46,56 @@ public class ActivityResults extends AppCompatActivity {
         super.onResume();
         refreshScoreTable();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main_top_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        switch(item.getItemId()) {
+            case R.id.msg:
+                intent = new Intent(this, ActivityMessages.class);
+                startActivity(intent);
+                return(true);
+            case R.id.team:
+                intent = new Intent(this, ActivityTeam.class);
+                startActivity(intent);
+                return(true);
+            case R.id.results:
+                intent = new Intent(this, ActivityResults.class);
+                startActivity(intent);
+                return(true);
+            case R.id.calendar:
+                intent = new Intent(this, ActivityCalendar.class);
+                startActivity(intent);
+                return(true);
+            case R.id.stadium:
+                intent = new Intent(this, ActivityStadium.class);
+                startActivity(intent);
+                return(true);
+            case R.id.finance:
+                intent = new Intent(this, ActivityFinance.class);
+                startActivity(intent);
+                return(true);
+            case R.id.mainPage:
+                intent = new Intent(this, ActivityMain.class);
+                startActivity(intent);
+                return(true);
+            case R.id.profile:
+                intent = new Intent(this, Profile.class);
+                startActivity(intent);
+                return(true);
+            case R.id.exit:
+                finish();
+                return(true);
+        }
+        return(super.onOptionsItemSelected(item));
+    }
+
 
     public String getLogin(){
         SharedPreferences sp1 = this.getSharedPreferences("Login", MODE_PRIVATE);
@@ -78,6 +130,8 @@ public class ActivityResults extends AppCompatActivity {
         teamsDb.open();
         String homeTeam = teamsDb.getClubName(x1);
         String awayTeam = teamsDb.getClubName(x2);
+
+        moneyForTicket(x1, x2);
 
         //Logika meczu
         int homeTeamAttackPower = teamsDb.getAttackClubPower(x1);
@@ -122,6 +176,9 @@ public class ActivityResults extends AppCompatActivity {
                     int awayScore = (int) (Math.min(10, (awayTeamAttackPower/homeTeamDefencePower)*(awayScoreLuck/100)));
                     resultsDb.playMatch(homeTeam, homeScore, awayTeam, awayScore);
 //                    System.out.println("Match: " + homeTeam + " " + homeScore + " - " + awayScore + " " + awayTeam);
+
+                    moneyForTicket(x1, x2);
+
                 }
             }
         }
@@ -245,5 +302,45 @@ public class ActivityResults extends AppCompatActivity {
         teamsDb.close();
     }
 
+    public Building getStadiumInfo(){
+        stadiumDb.open();
+        Cursor cursor = stadiumDb.getSpecificBuilding("Stadium");
+        cursor.moveToFirst();
+
+        int currentLevel = Integer.parseInt(cursor.getString(2));
+        int upgradeCost = Integer.parseInt(cursor.getString(3));
+        int ticketPrice = Integer.parseInt(cursor.getString(4));
+        int seatsAmount = Integer.parseInt(cursor.getString(5));
+        int newSeatCost = Integer.parseInt(cursor.getString(6));
+        cursor.close();
+
+        Building stadium = new Building("Stadium", currentLevel, upgradeCost, ticketPrice, seatsAmount, newSeatCost);
+        return stadium;
+    }
+
+    public void earnedMoney(double incomes) {
+        clubFinanceDb.open();
+        String login = getLogin();
+        clubFinanceDb.refreshClubFinance(login, incomes, 0, 0);
+        System.out.println("New BALANCE is: " + clubFinanceDb.getAccountBalance(login));
+    }
+
+    public void moneyForTicket(int x1, int x2) {
+        if (x1 == 0) {
+            int ticketPrice = getStadiumInfo().firstValue;
+            int seatsAmount = getStadiumInfo().secondValue;
+            int income = ticketPrice * seatsAmount;
+            Log.d("teamPoint", "Tickets income: " + String.valueOf(income));
+            earnedMoney(Double.valueOf(income));
+        }
+
+        if (x2 == 0) {
+            int ticketPrice = getStadiumInfo().firstValue;
+            int seatsAmount = getStadiumInfo().secondValue;
+            double income = 0.1 * ticketPrice * seatsAmount;
+            Log.d("teamPoint", "Tickets income: " + String.valueOf(income));
+            earnedMoney(income);
+        }
+    }
 
 }

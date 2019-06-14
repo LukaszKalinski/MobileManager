@@ -262,4 +262,5 @@ public class DatabaseResults {
         cursor.moveToFirst();
         return cursor;
     }
+
 }

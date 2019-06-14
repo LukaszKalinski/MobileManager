@@ -8,6 +8,9 @@
     <string name="LoginActivity_CreateAccount">Create Account</string>
     <string name="LoginActivity_LoginToGame">Sign into game</string>
 
+    //Main activity
+    <string name="activityMainPlayNextRound">Play Next Round</string>
+
     //Finance activity
     <string name="activityFinanceAccount">Account Balance: </string>
     <string name="activityFinanceTransferBudget">Transfer Budget: </string>
@@ -64,5 +67,6 @@
     <string name="activityDetailPlayerDefSkills">Def Skills:</string>
     <string name="activityDetailPlayerAttSkills">Att Skills:</string>
     <string name="activityDetailPlayerSellPlayer">Sell Player</string>
+    <string name="activityDetailPlayerCloseBtn">Close</string>
 
 </resources>

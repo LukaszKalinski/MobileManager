@@ -35,37 +35,34 @@ public class ActivityMessages extends AppCompatActivity {
             case R.id.msg:
                 intent = new Intent(this, ActivityMessages.class);
                 startActivity(intent);
-                finish();
                 return(true);
             case R.id.team:
                 intent = new Intent(this, ActivityTeam.class);
                 startActivity(intent);
-                finish();
+                return(true);
+            case R.id.results:
+                intent = new Intent(this, ActivityResults.class);
+                startActivity(intent);
                 return(true);
             case R.id.calendar:
                 intent = new Intent(this, ActivityCalendar.class);
                 startActivity(intent);
-                finish();
                 return(true);
             case R.id.stadium:
                 intent = new Intent(this, ActivityStadium.class);
                 startActivity(intent);
-                finish();
                 return(true);
             case R.id.finance:
                 intent = new Intent(this, ActivityFinance.class);
                 startActivity(intent);
-                finish();
                 return(true);
             case R.id.mainPage:
                 intent = new Intent(this, ActivityMain.class);
                 startActivity(intent);
-                finish();
                 return(true);
             case R.id.profile:
                 intent = new Intent(this, Profile.class);
                 startActivity(intent);
-                finish();
                 return(true);
             case R.id.exit:
                 finish();

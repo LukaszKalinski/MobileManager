@@ -28,6 +28,7 @@
         <activity android:name=".ActivityDetailScouting"></activity>
         <activity android:name=".ActivityDetailStadium"></activity>
         <activity android:name=".ActivityDetailPlayer"></activity>
+        <activity android:name=".ActivityDetailLastRound"></activity>
 
     </application>
 

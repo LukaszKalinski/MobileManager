@@ -1,9 +1,12 @@
 package com.example.mobilemanager;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,6 +22,8 @@ public class ActivityDetailStadium extends AppCompatActivity {
     TextView activityDetailStadiumSeats;
     TextView activityDetailStadiumTicketPrice;
     TextView activityDetailStadiumUpdateCost;
+    Button activityStadiumPlusBtn;
+    Button activityStadiumMinutBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,8 @@ public class ActivityDetailStadium extends AppCompatActivity {
         activityDetailStadiumSeats = (TextView) findViewById(R.id.activityDetailStadiumSeats);
         activityDetailStadiumTicketPrice = (TextView) findViewById(R.id.activityDetailStadiumTicketPrice);
         activityDetailStadiumUpdateCost = (TextView) findViewById(R.id.activityDetailStadiumUpdateCost);
+        activityStadiumPlusBtn = (Button) findViewById(R.id.activityStadiumPlusBtn);
+        activityStadiumMinutBtn = (Button) findViewById(R.id.activityStadiumMinutBtn);
 
         stadiumDb = new DatabaseStadium(ActivityDetailStadium.this, getLogin());
         financeDb = new DatabaseClubFinance(ActivityDetailStadium.this, getLogin());
@@ -44,6 +51,23 @@ public class ActivityDetailStadium extends AppCompatActivity {
             }
         });
 
+        activityStadiumPlusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int newTicketPrice = getStadiumInfo().getFirstValue() + 1;
+                setNewTicketPrice(newTicketPrice);
+                setTextViews();
+            }
+        });
+
+        activityStadiumMinutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int newTicketPrice = getStadiumInfo().getFirstValue() - 1;
+                setNewTicketPrice(newTicketPrice);
+                setTextViews();
+            }
+        });
     }
 
     @Override
@@ -51,6 +75,55 @@ public class ActivityDetailStadium extends AppCompatActivity {
         super.onResume();
         setTextViews();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main_top_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        switch(item.getItemId()) {
+            case R.id.msg:
+                intent = new Intent(this, ActivityMessages.class);
+                startActivity(intent);
+                return(true);
+            case R.id.team:
+                intent = new Intent(this, ActivityTeam.class);
+                startActivity(intent);
+                return(true);
+            case R.id.results:
+                intent = new Intent(this, ActivityResults.class);
+                startActivity(intent);
+                return(true);
+            case R.id.calendar:
+                intent = new Intent(this, ActivityCalendar.class);
+                startActivity(intent);
+                return(true);
+            case R.id.stadium:
+                intent = new Intent(this, ActivityStadium.class);
+                startActivity(intent);
+                return(true);
+            case R.id.finance:
+                intent = new Intent(this, ActivityFinance.class);
+                startActivity(intent);
+                return(true);
+            case R.id.mainPage:
+                intent = new Intent(this, ActivityMain.class);
+                startActivity(intent);
+                return(true);
+            case R.id.profile:
+                intent = new Intent(this, Profile.class);
+                startActivity(intent);
+                return(true);
+            case R.id.exit:
+                finish();
+                return(true);
+        }
+        return(super.onOptionsItemSelected(item));
     }
 
     public String getLogin() {
@@ -76,7 +149,11 @@ public class ActivityDetailStadium extends AppCompatActivity {
         return stadium;
     }
 
-    public void setNewTicketPrice(){}
+    public void setNewTicketPrice(int newTicketPrice){
+        stadiumDb.open();
+        stadiumDb.setNewTicketPrice(newTicketPrice);
+        stadiumDb.close();
+    }
 
     public void raiseStadiumLevel(){
         Building stadiumToUpdate = new Building("Stadium", getStadiumInfo().getLevel(), getStadiumInfo().getUpgradeCost(), getStadiumInfo().getFirstValue(), getStadiumInfo().getSecondValue(), getStadiumInfo().getThirdValue());

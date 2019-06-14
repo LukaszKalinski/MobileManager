@@ -129,4 +129,8 @@ public class DatabaseTeam {
         }
         return wageMax;
     }
+
+    public void sellPlayer(int number){
+        db.delete(DATABASE_TABLE, KEY_NUMBER + "=?", new String[] {String.valueOf(number)});
+    }
 }
