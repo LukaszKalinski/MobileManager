@@ -137,12 +137,12 @@ public class ActivityFinance extends AppCompatActivity {
                 java.text.DecimalFormat df = new java.text.DecimalFormat();
                 df.setMaximumFractionDigits(3);
                 df.setMinimumFractionDigits(3);
-                activityFinanceAccountBalance.setText(String.valueOf("$ " + df.format(balance/1000) + " k $"));
+                activityFinanceAccountBalance.setText(String.valueOf("$ " + df.format(balance/1000) + " k"));
             } else {
                 java.text.DecimalFormat df = new java.text.DecimalFormat();
                 df.setMaximumFractionDigits(3);
                 df.setMinimumFractionDigits(3);
-                activityFinanceAccountBalance.setText(String.valueOf("$ " + df.format(balance) + " $"));
+                activityFinanceAccountBalance.setText(String.valueOf("$ " + df.format(balance)));
             }
         }
         clubFinanceDb.close();

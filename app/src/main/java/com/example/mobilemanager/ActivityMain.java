@@ -10,7 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -24,7 +27,14 @@ public class ActivityMain extends AppCompatActivity {
     DatabaseStadium stadiumDb;
     DatabaseNewFoundPlayer newFoundPlayerDb;
     Button activityMainPlayNextRound;
-
+    TextView activityMainNextMatch;
+    TextView activityMainLastMatch;
+    TextView activityMainCurrentBalance;
+    TextView activityMainCurrentPower;
+    String nextMatch;
+    String lastMatch;
+    String accountBalance;
+    String teamPower;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +50,10 @@ public class ActivityMain extends AppCompatActivity {
         newFoundPlayerDb = new DatabaseNewFoundPlayer(this, getLogin());
 
         activityMainPlayNextRound = (Button) findViewById(R.id.activityMainPlayNextRound);
+        activityMainNextMatch = (TextView)findViewById(R.id.activityMainNextMatch);
+        activityMainLastMatch = (TextView) findViewById(R.id.activityMainLastMatch);
+        activityMainCurrentBalance = (TextView) findViewById(R.id.activityMainCurrentBalance);
+        activityMainCurrentPower = (TextView) findViewById(R.id.activityMainCurrentPower);
 
         //Checking if Databases exists
         checkIfClubFinanceDbExist();
@@ -58,11 +72,16 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
 
+        refreshTextView();
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+        refreshTextView();
+
     }
 
     @Override
@@ -139,8 +158,8 @@ public class ActivityMain extends AppCompatActivity {
         } else {
             teamsDb.createTeams(getLogin(), 1, 1);
             for (int i = 0; i < 15; i++) {
-                int attackPower = (int) (Math.max((Math.random() * 2000), 500));
-                int defencePower = (int) (Math.max((Math.random() * 2000), 500));
+                int attackPower = (int) (Math.random() * 1500 + 700);
+                int defencePower = (int) (Math.random() * 1500 + 700);
                 teamsDb.createTeams(String.valueOf(i), attackPower, defencePower);
             }
         }
@@ -425,11 +444,17 @@ public class ActivityMain extends AppCompatActivity {
         int match = cursor.getCount();
         int x1 = 1;
         int x2 = 1;
+        String homeTeam;
+        String awayTeam;
+        int homeId;
+        int awayId;
 
         for (int a = 0; a < match; a ++){
             cursor.moveToPosition(a);
-            String homeTeam = cursor.getString(2);
-            String awayTeam = cursor.getString(3);
+            homeTeam = cursor.getString(2);
+            homeId = teamsDb.getClubIdByName(homeTeam);
+            awayTeam = cursor.getString(3);
+            awayId = teamsDb.getClubIdByName(awayTeam);
 
             if (homeTeam.equals(teamsDb.getMyClubName())){
                 x1 = 0;
@@ -440,11 +465,14 @@ public class ActivityMain extends AppCompatActivity {
                 moneyForTicket(x1, x2);
             }
 
-            //Logika meczu
-            int homeTeamAttackPower = teamsDb.getAttackClubPower(x1);
-            int homeTeamDefencePower = teamsDb.getDefenceClubPower(x1);
-            int awayTeamAttackPower = teamsDb.getAttackClubPower(x2);
-            int awayTeamDefencePower = teamsDb.getDefenceClubPower(x2);
+            //Match's logic
+//            Log.d("teamPoint","homeID: " + homeId + ", " + homeTeam);
+//            Log.d("teamPoint", "awayID: " + awayId + ", " + awayTeam);
+
+            int homeTeamAttackPower = teamsDb.getAttackClubPower(homeId);
+            int homeTeamDefencePower = teamsDb.getDefenceClubPower(homeId);
+            int awayTeamAttackPower = teamsDb.getAttackClubPower(awayId);
+            int awayTeamDefencePower = teamsDb.getDefenceClubPower(awayId);
 
             double homeScoreLuck = (Math.random()*100 + 30);
             double awayScoreLuck = (Math.random()*100 + 30);
@@ -452,7 +480,12 @@ public class ActivityMain extends AppCompatActivity {
             int homeScore = (int) (Math.min(10, ((homeTeamAttackPower/awayTeamDefencePower)^3)*(homeScoreLuck/100)));
             int awayScore = (int) (Math.min(10, ((awayTeamAttackPower/homeTeamDefencePower)^3)*(awayScoreLuck/100)));
             resultsDb.playMatch(homeTeam, homeScore, awayTeam, awayScore);
-            System.out.println("Round " + round + " , match: " + homeTeam + " " + homeScore + " - " + awayScore + " " + awayTeam);
+
+            Log.d("teamPoint","Round " + round + " , match: " + homeTeam + " [" + homeScore + " - " + awayScore + "] " + awayTeam);
+            Log.d("teamPoint","stats: homeTeam - " + String.valueOf(homeTeamAttackPower) + " - "
+                    + String.valueOf(homeTeamDefencePower) + " and luck: " + String.valueOf(homeScoreLuck));
+            Log.d("teamPoint","stats: awayTeam - " + String.valueOf(awayTeamAttackPower) + " - "
+                    + String.valueOf(awayTeamDefencePower) + " and luck: " + String.valueOf(awayScoreLuck));
 
         }
 
@@ -511,6 +544,94 @@ public class ActivityMain extends AppCompatActivity {
         String login = getLogin();
         clubFinanceDb.refreshClubFinance(login, incomes, 0, 0);
         System.out.println("New BALANCE is: " + clubFinanceDb.getAccountBalance(login));
+    }
+
+    public String getMyTeamNextMatch(){
+        teamsDb.open();
+        resultsDb.open();
+        Cursor nextMatchCursor = resultsDb.getScheduledMatchesOfTeam(teamsDb.getClubName(0));
+        nextMatch = "Not arranged yet";
+
+        if (nextMatchCursor.moveToFirst())  {
+            nextMatch = "[" + nextMatchCursor.getString(2) + "] "
+                    + nextMatchCursor.getString(4) + " - "
+                    + nextMatchCursor.getString(5) + " ["
+                    + nextMatchCursor.getString(3) + "]"
+            ;
+        } else {
+            nextMatch = "No more games in this season";
+        }
+
+             nextMatchCursor.close();
+
+        resultsDb.close();
+        teamsDb.close();
+
+        return nextMatch;
+    }
+
+    public String getMyTeamLastMatch(){
+        teamsDb.open();
+        resultsDb.open();
+        Cursor lastMatchCursor = resultsDb.getPlayedMatchesOfTeam(teamsDb.getClubName(0));
+
+        if (lastMatchCursor.getCount() > 0){
+            lastMatchCursor.moveToLast();
+            lastMatch = "[" + lastMatchCursor.getString(2) + "] "
+                    + lastMatchCursor.getString(4) + " - "
+                    + lastMatchCursor.getString(5) + " ["
+                    + lastMatchCursor.getString(3) + "]";
+        } else {
+            lastMatch = "Not played yet";
+        }
+        lastMatchCursor.close();
+
+        resultsDb.close();
+        teamsDb.close();
+
+        return lastMatch;
+    }
+
+    public void setMyAccountBalance(){
+        clubFinanceDb.open();
+        String login = getLogin();
+        Double balance = clubFinanceDb.getAccountBalance(login);
+        if (balance >= 1000000){
+            java.text.DecimalFormat df = new java.text.DecimalFormat();
+            df.setMaximumFractionDigits(3);
+            df.setMinimumFractionDigits(3);
+            activityMainCurrentBalance.setText(String.valueOf("$ " + df.format(balance/1000000) + " M"));
+        } else {
+            if (balance < 1000000 && balance >= 1000) {
+                java.text.DecimalFormat df = new java.text.DecimalFormat();
+                df.setMaximumFractionDigits(3);
+                df.setMinimumFractionDigits(3);
+                activityMainCurrentBalance.setText(String.valueOf("$ " + df.format(balance/1000) + " k"));
+            } else {
+                java.text.DecimalFormat df = new java.text.DecimalFormat();
+                df.setMaximumFractionDigits(3);
+                df.setMinimumFractionDigits(3);
+                activityMainCurrentBalance.setText(String.valueOf("$ " + df.format(balance)));
+            }
+        }
+    }
+
+    public String getTeamPower(){
+        teamsDb.open();
+        int defPower = teamsDb.getDefenceClubPower(0);
+        int attPower = teamsDb.getAttackClubPower(0);
+
+        teamsDb.close();
+        teamPower = "ATT: " + String.valueOf(attPower) + " / DEF: " + String.valueOf(defPower);
+
+        return teamPower;
+    }
+
+    public void refreshTextView(){
+        activityMainNextMatch.setText(getMyTeamNextMatch());
+        activityMainLastMatch.setText(getMyTeamLastMatch());
+        setMyAccountBalance();
+        activityMainCurrentPower.setText(getTeamPower());
     }
 
 }

@@ -10,6 +10,11 @@
 
     //Main activity
     <string name="activityMainPlayNextRound">Play Next Round</string>
+    <string name="activityMainHeader">Short Information</string>
+    <string name="activityMainCurrentBalance">Current Balance:</string>
+    <string name="activityMainCurrentPower">Current Power:</string>
+    <string name="activityMainCurrentNextMatch">Next Match:</string>
+    <string name="activityMainCurrentLastMatch">Last Match:</string>
 
     //Finance activity
     <string name="activityFinanceAccount">Account Balance: </string>

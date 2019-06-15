@@ -135,5 +135,20 @@ public class DatabaseTeams {
         return db.update(DATABASE_TABLE, initialValues, KEY_CLUB_NAME + "=?", new String[] {team});
     }
 
+    public int getClubIdByName(String name) throws SQLException {
+        Cursor cursor = db.query(DATABASE_TABLE, null, null, null, null, null, null);
+        int id;
+        int aMax = cursor.getCount();
+        for (int a = 0; a < aMax; a ++){
+            cursor.moveToPosition(a);
+            if (cursor.getString(2).equals(name)){
+                id = cursor.getPosition();
+                break;
+            }
+        }
+        id = cursor.getPosition();
+        cursor.close();
+        return id;
+    }
 }
 

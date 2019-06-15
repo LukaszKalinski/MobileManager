@@ -253,37 +253,37 @@ public class ActivityDetailScouting extends AppCompatActivity {
 
             switch (position) {
                 case "Goalkeeper":
-                    gkSkills = (int) (Math.random() * 100);
-                    defSkills = (int) (Math.random() * 10);
-                    attSkills = (int) (Math.random() * 10);
+                    gkSkills = (int) (Math.max(currentLevel * 10, Math.random() * 100));
+                    defSkills = (int) (Math.max(currentLevel * 0.5, Math.random() * 10));
+                    attSkills = (int) (Math.max(currentLevel * 0.5, Math.random() * 10));
                     factor = (int) Math.pow(2, (int) (gkSkills / 10));
                     value = (int) (Math.max(1000, gkSkills * skillsValue * factor));
                     break;
                 case "Defender":
-                    gkSkills = (int) (Math.random() * 10);
-                    defSkills = (int) (Math.random() * 100);
-                    attSkills = (int) (Math.random() * 100);
+                    gkSkills = (int) (Math.max(currentLevel * 0.5, Math.random() * 10));
+                    defSkills = (int) (Math.max(currentLevel * 10, Math.random() * 100));
+                    attSkills = (int) (Math.max(currentLevel * 10, Math.random() * 100));
                     factor = (int) Math.pow(2, (int) (defSkills / 10));
                     value = (int) (Math.max(1000, defSkills * skillsValue * factor + attSkills * skillsValue));
                     break;
                 case "Midfielder":
-                    gkSkills = (int) (Math.random() * 10);
-                    defSkills = (int) (Math.random() * 100);
-                    attSkills = (int) (Math.random() * 100);
+                    gkSkills = (int) (Math.max(currentLevel * 0.5, Math.random() * 10));
+                    defSkills = (int) (Math.max(currentLevel * 10, Math.random() * 100));
+                    attSkills = (int) (Math.max(currentLevel * 10, Math.random() * 100));
                     factor = (int) Math.pow(2, (int) ((defSkills + attSkills) / 20));
                     value = (int) (Math.max(1000, defSkills * skillsValue * factor + attSkills * skillsValue * factor));
                     break;
                 case "Attacker":
-                    gkSkills = (int) (Math.random() * 10);
-                    defSkills = (int) (Math.random() * 100);
-                    attSkills = (int) (Math.random() * 100);
+                    gkSkills = (int) (Math.max(currentLevel * 0.5, Math.random() * 10));
+                    defSkills = (int) (Math.max(currentLevel * 10, Math.random() * 100));
+                    attSkills = (int) (Math.max(currentLevel * 10, Math.random() * 100));
                     factor = (int) Math.pow(2, (int) (attSkills / 10));
                     value = (int) (Math.max(1000, attSkills * skillsValue * factor + skillsValue * defSkills));
                     break;
                 default:
-                    gkSkills = (int) (Math.random() * 10);
-                    defSkills = (int) (Math.random() * 100);
-                    attSkills = (int) (Math.random() * 100);
+                    gkSkills = (int) (Math.max(currentLevel * 0.5, Math.random() * 10));
+                    defSkills = (int) (Math.max(currentLevel * 10, Math.random() * 100));
+                    attSkills = (int) (Math.max(currentLevel * 10, Math.random() * 100));
                     factor = (int) Math.pow(2, (int) (gkSkills / 10));
                     value = (int) (Math.max(1000, gkSkills * skillsValue * factor));
                     break;
