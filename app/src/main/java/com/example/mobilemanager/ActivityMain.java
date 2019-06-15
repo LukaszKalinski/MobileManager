@@ -474,11 +474,11 @@ public class ActivityMain extends AppCompatActivity {
             int awayTeamAttackPower = teamsDb.getAttackClubPower(awayId);
             int awayTeamDefencePower = teamsDb.getDefenceClubPower(awayId);
 
-            double homeScoreLuck = (Math.random()*100 + 30);
-            double awayScoreLuck = (Math.random()*100 + 30);
+            double homeScoreLuck = (Math.random()*230 + 70)/100;
+            double awayScoreLuck = (Math.random()*230 + 70)/100;
 
-            int homeScore = (int) (Math.min(10, ((homeTeamAttackPower/awayTeamDefencePower)^3)*(homeScoreLuck/100)));
-            int awayScore = (int) (Math.min(10, ((awayTeamAttackPower/homeTeamDefencePower)^3)*(awayScoreLuck/100)));
+            int homeScore = (int) (Math.min(10, (Math.pow((homeTeamAttackPower/awayTeamDefencePower), 3)* homeScoreLuck)));
+            int awayScore = (int) (Math.min(10, (Math.pow((awayTeamAttackPower/homeTeamDefencePower), 3)* awayScoreLuck)));
             resultsDb.playMatch(homeTeam, homeScore, awayTeam, awayScore);
 
             Log.d("teamPoint","Round " + round + " , match: " + homeTeam + " [" + homeScore + " - " + awayScore + "] " + awayTeam);
